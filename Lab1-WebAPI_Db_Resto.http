@@ -1,0 +1,6 @@
+@Lab1_WebAPI_Db_Resto_HostAddress = http://localhost:5271
+
+GET {{Lab1_WebAPI_Db_Resto_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
