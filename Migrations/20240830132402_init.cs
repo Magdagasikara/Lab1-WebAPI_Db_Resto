@@ -19,9 +19,9 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -86,6 +86,30 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Bookings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AmountOfGuests = table.Column<int>(type: "int", nullable: false),
+                    ReservationStart = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReservationEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    FK_CustomerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bookings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bookings_Customers_FK_CustomerId",
+                        column: x => x.FK_CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MealIngredient",
                 columns: table => new
                 {
@@ -133,36 +157,6 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                         principalTable: "Meals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Bookings",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AmountOfGuests = table.Column<int>(type: "int", nullable: false),
-                    ReservationStart = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReservationEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    FK_CustomerId = table.Column<int>(type: "int", nullable: false),
-                    TableId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Bookings", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Bookings_Customers_FK_CustomerId",
-                        column: x => x.FK_CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Bookings_Tables_TableId",
-                        column: x => x.TableId,
-                        principalTable: "Tables",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -242,17 +236,17 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 {
                     { 1, 4, 1 },
                     { 2, 2, 2 },
-                    { 3, 4, 1 },
-                    { 4, 2, 2 }
+                    { 3, 4, 3 },
+                    { 4, 2, 4 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Bookings",
-                columns: new[] { "Id", "AmountOfGuests", "FK_CustomerId", "IsActive", "ReservationEnd", "ReservationStart", "TableId", "TimeStamp" },
+                columns: new[] { "Id", "AmountOfGuests", "FK_CustomerId", "IsActive", "ReservationEnd", "ReservationStart", "TimeStamp" },
                 values: new object[,]
                 {
-                    { 1, 0, 2, true, new DateTime(2024, 8, 28, 17, 31, 6, 118, DateTimeKind.Local).AddTicks(9194), new DateTime(2024, 8, 28, 15, 31, 6, 118, DateTimeKind.Local).AddTicks(9139), null, new DateTime(2024, 8, 28, 15, 31, 6, 118, DateTimeKind.Local).AddTicks(9199) },
-                    { 2, 6, 2, true, new DateTime(2024, 8, 28, 17, 31, 6, 118, DateTimeKind.Local).AddTicks(9205), new DateTime(2024, 8, 28, 15, 31, 6, 118, DateTimeKind.Local).AddTicks(9203), null, new DateTime(2024, 8, 28, 15, 31, 6, 118, DateTimeKind.Local).AddTicks(9208) }
+                    { 1, 0, 2, true, new DateTime(2024, 8, 30, 17, 24, 1, 633, DateTimeKind.Local).AddTicks(1019), new DateTime(2024, 8, 30, 15, 24, 1, 633, DateTimeKind.Local).AddTicks(951), new DateTime(2024, 8, 30, 15, 24, 1, 633, DateTimeKind.Local).AddTicks(1029) },
+                    { 2, 6, 2, true, new DateTime(2024, 8, 30, 17, 24, 1, 633, DateTimeKind.Local).AddTicks(1038), new DateTime(2024, 8, 30, 15, 24, 1, 633, DateTimeKind.Local).AddTicks(1035), new DateTime(2024, 8, 30, 15, 24, 1, 633, DateTimeKind.Local).AddTicks(1042) }
                 });
 
             migrationBuilder.InsertData(
@@ -282,9 +276,10 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 column: "FK_CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bookings_TableId",
-                table: "Bookings",
-                column: "TableId");
+                name: "IX_Customers_Email",
+                table: "Customers",
+                column: "Email",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_MealIngredient_FK_IngredientId",
@@ -310,6 +305,12 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 name: "IX_TableBooking_FK_TableId",
                 table: "TableBooking",
                 column: "FK_TableId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tables_TableNumber",
+                table: "Tables",
+                column: "TableNumber",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -337,10 +338,10 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 name: "Bookings");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "Tables");
 
             migrationBuilder.DropTable(
-                name: "Tables");
+                name: "Customers");
         }
     }
 }

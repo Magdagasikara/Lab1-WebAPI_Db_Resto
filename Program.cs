@@ -2,6 +2,8 @@
 using Lab1_WebAPI_Db_Resto.Data;
 using Lab1_WebAPI_Db_Resto.Data.Repositories;
 using Lab1_WebAPI_Db_Resto.Data.Repositories.IRepositories;
+using Lab1_WebAPI_Db_Resto.Services;
+using Lab1_WebAPI_Db_Resto.Services.IServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lab1_WebAPI_Db_Resto
@@ -15,6 +17,7 @@ namespace Lab1_WebAPI_Db_Resto
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
             // Add services to the container.
 
@@ -23,6 +26,9 @@ namespace Lab1_WebAPI_Db_Resto
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<ICustomerRepository,CustomerRepository>();
+            builder.Services.AddScoped<ICustomerServices, CustomerServices>();
+            builder.Services.AddScoped<ITableRepository, TableRepository>();
+            builder.Services.AddScoped<ITableServices, TableServices>();
 
             var app = builder.Build();
 

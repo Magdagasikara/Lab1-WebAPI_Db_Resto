@@ -7,9 +7,7 @@ namespace Lab1_WebAPI_Db_Resto.Data
     {
         public RestoContext(DbContextOptions<RestoContext> options) : base(options)
         {
-
         }
-
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
@@ -26,8 +24,8 @@ namespace Lab1_WebAPI_Db_Resto.Data
             modelBuilder.Entity<Table>().HasData(
                 new Table { Id = 1, TableNumber = 1, AmountOfPlaces = 4 },
                 new Table { Id = 2, TableNumber = 2, AmountOfPlaces = 2 },
-                new Table { Id = 3, TableNumber = 1, AmountOfPlaces = 4 },
-                new Table { Id = 4, TableNumber = 2, AmountOfPlaces = 2 }
+                new Table { Id = 3, TableNumber = 3, AmountOfPlaces = 4 },
+                new Table { Id = 4, TableNumber = 4, AmountOfPlaces = 2 }
                 );
             modelBuilder.Entity<Booking>().HasData(
                 new Booking

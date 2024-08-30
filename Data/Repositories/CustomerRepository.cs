@@ -1,6 +1,7 @@
 ﻿using Lab1_WebAPI_Db_Resto.Data.Repositories.IRepositories;
 using Lab1_WebAPI_Db_Resto.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Lab1_WebAPI_Db_Resto.Data.Repositories
 {
@@ -11,7 +12,7 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
         {
             _context = context;
         }
-        public async Task AddCustomer(Customer customer)
+        public async Task AddCustomerAsync(Customer customer)
         {
             try
             {
@@ -24,11 +25,11 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             }
         }
 
-        public async Task DeleteCustomer(int customerId)
+        public async Task DeleteCustomerByEmailAsync(string email)
         {
             try
             {
-                var customer = await GetCustomerById(customerId);
+                var customer = await GetCustomerByEmailAsync(email);
                 _context.Customers.Remove(customer);
                 await _context.SaveChangesAsync();
             }
@@ -43,7 +44,7 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
 
         }
 
-        public async Task<IEnumerable<Customer>> GetAllCustomers()
+        public async Task<IEnumerable<Customer>> GetAllCustomersAsync()
         {
             try
             {
@@ -51,12 +52,34 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception("Error getting a list of customers",ex);
+                throw new Exception("Error getting a list of customers", ex);
             }
 
         }
 
-        public async Task<Customer> GetCustomerById(int customerId)
+        public async Task<Customer> GetCustomerByEmailAsync(string email)
+        {
+            try
+            {
+                var customer = await _context.Customers
+                    .SingleOrDefaultAsync(c => c.Email == email);
+                if (customer != null)
+                {
+                    return customer;
+                }
+                throw new KeyNotFoundException($"No customer with {email}");
+            }
+            catch (KeyNotFoundException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error when getting a customer", ex);
+            }
+        }
+
+        public async Task<Customer> GetCustomerByIdAsync(int customerId)
         {
             try
             {
@@ -73,15 +96,18 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             }
         }
 
-        public async Task UpdateCustomer(Customer customer)
+        public async Task UpdateCustomerAsync(string email, Customer updatedCustomer)
         {
-            if (customer == null)
+            if (updatedCustomer == null || email.IsNullOrEmpty())
             {
-                throw new ArgumentNullException(nameof(customer), "Customer to be updated is null");
+                throw new ArgumentNullException(nameof(updatedCustomer), "No customer to be updated");
             }
             try
             {
-                _context.Customers.Update(customer);
+                var customer = await GetCustomerByEmailAsync(email);
+                customer.Name = updatedCustomer.Name;
+                customer.Email = updatedCustomer.Email;
+                customer.PhoneNumber = updatedCustomer.PhoneNumber;
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -90,7 +116,7 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception("Error when updating a customer",ex);
+                throw new Exception("Error when updating a customer", ex);
             }
         }
     }

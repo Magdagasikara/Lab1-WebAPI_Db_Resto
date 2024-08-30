@@ -45,17 +45,12 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                     b.Property<DateTime>("ReservationStart")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("TableId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FK_CustomerId");
-
-                    b.HasIndex("TableId");
 
                     b.ToTable("Bookings");
 
@@ -66,9 +61,9 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                             AmountOfGuests = 0,
                             FK_CustomerId = 2,
                             IsActive = true,
-                            ReservationEnd = new DateTime(2024, 8, 28, 17, 31, 6, 118, DateTimeKind.Local).AddTicks(9194),
-                            ReservationStart = new DateTime(2024, 8, 28, 15, 31, 6, 118, DateTimeKind.Local).AddTicks(9139),
-                            TimeStamp = new DateTime(2024, 8, 28, 15, 31, 6, 118, DateTimeKind.Local).AddTicks(9199)
+                            ReservationEnd = new DateTime(2024, 8, 30, 17, 24, 1, 633, DateTimeKind.Local).AddTicks(1019),
+                            ReservationStart = new DateTime(2024, 8, 30, 15, 24, 1, 633, DateTimeKind.Local).AddTicks(951),
+                            TimeStamp = new DateTime(2024, 8, 30, 15, 24, 1, 633, DateTimeKind.Local).AddTicks(1029)
                         },
                         new
                         {
@@ -76,9 +71,9 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                             AmountOfGuests = 6,
                             FK_CustomerId = 2,
                             IsActive = true,
-                            ReservationEnd = new DateTime(2024, 8, 28, 17, 31, 6, 118, DateTimeKind.Local).AddTicks(9205),
-                            ReservationStart = new DateTime(2024, 8, 28, 15, 31, 6, 118, DateTimeKind.Local).AddTicks(9203),
-                            TimeStamp = new DateTime(2024, 8, 28, 15, 31, 6, 118, DateTimeKind.Local).AddTicks(9208)
+                            ReservationEnd = new DateTime(2024, 8, 30, 17, 24, 1, 633, DateTimeKind.Local).AddTicks(1038),
+                            ReservationStart = new DateTime(2024, 8, 30, 15, 24, 1, 633, DateTimeKind.Local).AddTicks(1035),
+                            TimeStamp = new DateTime(2024, 8, 30, 15, 24, 1, 633, DateTimeKind.Local).AddTicks(1042)
                         });
                 });
 
@@ -92,17 +87,22 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Customers");
 
@@ -337,6 +337,9 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TableNumber")
+                        .IsUnique();
+
                     b.ToTable("Tables");
 
                     b.HasData(
@@ -356,13 +359,13 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                         {
                             Id = 3,
                             AmountOfPlaces = 4,
-                            TableNumber = 1
+                            TableNumber = 3
                         },
                         new
                         {
                             Id = 4,
                             AmountOfPlaces = 2,
-                            TableNumber = 2
+                            TableNumber = 4
                         });
                 });
 
@@ -432,10 +435,6 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Lab1_WebAPI_Db_Resto.Models.Table", null)
-                        .WithMany("Bookings")
-                        .HasForeignKey("TableId");
-
                     b.Navigation("Customer");
                 });
 
@@ -467,7 +466,7 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                         .IsRequired();
 
                     b.HasOne("Lab1_WebAPI_Db_Resto.Models.Table", "Table")
-                        .WithMany()
+                        .WithMany("TableBooking")
                         .HasForeignKey("FK_TableId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -514,7 +513,7 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
 
             modelBuilder.Entity("Lab1_WebAPI_Db_Resto.Models.Table", b =>
                 {
-                    b.Navigation("Bookings");
+                    b.Navigation("TableBooking");
                 });
 #pragma warning restore 612, 618
         }

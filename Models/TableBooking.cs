@@ -11,7 +11,5 @@ namespace Lab1_WebAPI_Db_Resto.Models
         [ForeignKey("Booking")]
         public int FK_BookingId { get; set; }
         public Booking Booking { get; set; }
-
-
     }
 }

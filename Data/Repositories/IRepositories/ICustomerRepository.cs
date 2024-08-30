@@ -4,11 +4,12 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories.IRepositories
 {
     public interface ICustomerRepository
     {
-        Task<IEnumerable<Customer>> GetAllCustomers();
-        Task<Customer> GetCustomerById(int customerId);
-        Task AddCustomer(Customer customer);
-        Task UpdateCustomer(Customer customer);
-        Task DeleteCustomer(int customerId);
+        Task<IEnumerable<Customer>> GetAllCustomersAsync();
+        Task<Customer> GetCustomerByIdAsync(int customerId);
+        Task<Customer> GetCustomerByEmailAsync(string email);
+        Task AddCustomerAsync(Customer customer);
+        Task UpdateCustomerAsync(string email, Customer updatedCustomer);
+        Task DeleteCustomerByEmailAsync(string email);
 
     }
 }
