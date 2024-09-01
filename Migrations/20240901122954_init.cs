@@ -91,11 +91,11 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    BookingNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AmountOfGuests = table.Column<int>(type: "int", nullable: false),
                     ReservationStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ReservationEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     FK_CustomerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -110,7 +110,7 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MealIngredient",
+                name: "MealIngredients",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -120,15 +120,15 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MealIngredient", x => x.Id);
+                    table.PrimaryKey("PK_MealIngredients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MealIngredient_Ingredients_FK_IngredientId",
+                        name: "FK_MealIngredients_Ingredients_FK_IngredientId",
                         column: x => x.FK_IngredientId,
                         principalTable: "Ingredients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MealIngredient_Meals_FK_MealId",
+                        name: "FK_MealIngredients_Meals_FK_MealId",
                         column: x => x.FK_MealId,
                         principalTable: "Meals",
                         principalColumn: "Id",
@@ -160,7 +160,7 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TableBooking",
+                name: "TableBookings",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -170,15 +170,15 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TableBooking", x => x.Id);
+                    table.PrimaryKey("PK_TableBookings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TableBooking_Bookings_FK_BookingId",
+                        name: "FK_TableBookings_Bookings_FK_BookingId",
                         column: x => x.FK_BookingId,
                         principalTable: "Bookings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TableBooking_Tables_FK_TableId",
+                        name: "FK_TableBookings_Tables_FK_TableId",
                         column: x => x.FK_TableId,
                         principalTable: "Tables",
                         principalColumn: "Id",
@@ -242,15 +242,15 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
 
             migrationBuilder.InsertData(
                 table: "Bookings",
-                columns: new[] { "Id", "AmountOfGuests", "FK_CustomerId", "IsActive", "ReservationEnd", "ReservationStart", "TimeStamp" },
+                columns: new[] { "Id", "AmountOfGuests", "BookingNumber", "FK_CustomerId", "ReservationEnd", "ReservationStart", "TimeStamp" },
                 values: new object[,]
                 {
-                    { 1, 0, 2, true, new DateTime(2024, 8, 30, 17, 24, 1, 633, DateTimeKind.Local).AddTicks(1019), new DateTime(2024, 8, 30, 15, 24, 1, 633, DateTimeKind.Local).AddTicks(951), new DateTime(2024, 8, 30, 15, 24, 1, 633, DateTimeKind.Local).AddTicks(1029) },
-                    { 2, 6, 2, true, new DateTime(2024, 8, 30, 17, 24, 1, 633, DateTimeKind.Local).AddTicks(1038), new DateTime(2024, 8, 30, 15, 24, 1, 633, DateTimeKind.Local).AddTicks(1035), new DateTime(2024, 8, 30, 15, 24, 1, 633, DateTimeKind.Local).AddTicks(1042) }
+                    { 1, 0, "120240901", 2, new DateTime(2024, 9, 1, 16, 29, 52, 954, DateTimeKind.Local).AddTicks(1183), new DateTime(2024, 9, 1, 14, 29, 52, 954, DateTimeKind.Local).AddTicks(1091), new DateTime(2024, 9, 1, 14, 29, 52, 954, DateTimeKind.Local).AddTicks(1192) },
+                    { 2, 6, "220240901", 2, new DateTime(2024, 9, 1, 16, 29, 52, 954, DateTimeKind.Local).AddTicks(1366), new DateTime(2024, 9, 1, 14, 29, 52, 954, DateTimeKind.Local).AddTicks(1360), new DateTime(2024, 9, 1, 14, 29, 52, 954, DateTimeKind.Local).AddTicks(1375) }
                 });
 
             migrationBuilder.InsertData(
-                table: "MealIngredient",
+                table: "MealIngredients",
                 columns: new[] { "Id", "FK_IngredientId", "FK_MealId" },
                 values: new object[,]
                 {
@@ -261,7 +261,7 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "TableBooking",
+                table: "TableBookings",
                 columns: new[] { "Id", "FK_BookingId", "FK_TableId" },
                 values: new object[,]
                 {
@@ -269,6 +269,12 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                     { 2, 1, 2 },
                     { 3, 2, 3 }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_BookingNumber",
+                table: "Bookings",
+                column: "BookingNumber",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_FK_CustomerId",
@@ -282,13 +288,13 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_MealIngredient_FK_IngredientId",
-                table: "MealIngredient",
+                name: "IX_MealIngredients_FK_IngredientId",
+                table: "MealIngredients",
                 column: "FK_IngredientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MealIngredient_FK_MealId",
-                table: "MealIngredient",
+                name: "IX_MealIngredients_FK_MealId",
+                table: "MealIngredients",
                 column: "FK_MealId");
 
             migrationBuilder.CreateIndex(
@@ -297,13 +303,13 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 column: "MealsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TableBooking_FK_BookingId",
-                table: "TableBooking",
+                name: "IX_TableBookings_FK_BookingId",
+                table: "TableBookings",
                 column: "FK_BookingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TableBooking_FK_TableId",
-                table: "TableBooking",
+                name: "IX_TableBookings_FK_TableId",
+                table: "TableBookings",
                 column: "FK_TableId");
 
             migrationBuilder.CreateIndex(
@@ -317,13 +323,13 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "MealIngredient");
+                name: "MealIngredients");
 
             migrationBuilder.DropTable(
                 name: "MealMealCategory");
 
             migrationBuilder.DropTable(
-                name: "TableBooking");
+                name: "TableBookings");
 
             migrationBuilder.DropTable(
                 name: "Ingredients");

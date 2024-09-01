@@ -33,11 +33,12 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                     b.Property<int>("AmountOfGuests")
                         .HasColumnType("int");
 
+                    b.Property<string>("BookingNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("FK_CustomerId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("ReservationEnd")
                         .HasColumnType("datetime2");
@@ -50,6 +51,9 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BookingNumber")
+                        .IsUnique();
+
                     b.HasIndex("FK_CustomerId");
 
                     b.ToTable("Bookings");
@@ -59,21 +63,21 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                         {
                             Id = 1,
                             AmountOfGuests = 0,
+                            BookingNumber = "120240901",
                             FK_CustomerId = 2,
-                            IsActive = true,
-                            ReservationEnd = new DateTime(2024, 8, 30, 17, 24, 1, 633, DateTimeKind.Local).AddTicks(1019),
-                            ReservationStart = new DateTime(2024, 8, 30, 15, 24, 1, 633, DateTimeKind.Local).AddTicks(951),
-                            TimeStamp = new DateTime(2024, 8, 30, 15, 24, 1, 633, DateTimeKind.Local).AddTicks(1029)
+                            ReservationEnd = new DateTime(2024, 9, 1, 16, 29, 52, 954, DateTimeKind.Local).AddTicks(1183),
+                            ReservationStart = new DateTime(2024, 9, 1, 14, 29, 52, 954, DateTimeKind.Local).AddTicks(1091),
+                            TimeStamp = new DateTime(2024, 9, 1, 14, 29, 52, 954, DateTimeKind.Local).AddTicks(1192)
                         },
                         new
                         {
                             Id = 2,
                             AmountOfGuests = 6,
+                            BookingNumber = "220240901",
                             FK_CustomerId = 2,
-                            IsActive = true,
-                            ReservationEnd = new DateTime(2024, 8, 30, 17, 24, 1, 633, DateTimeKind.Local).AddTicks(1038),
-                            ReservationStart = new DateTime(2024, 8, 30, 15, 24, 1, 633, DateTimeKind.Local).AddTicks(1035),
-                            TimeStamp = new DateTime(2024, 8, 30, 15, 24, 1, 633, DateTimeKind.Local).AddTicks(1042)
+                            ReservationEnd = new DateTime(2024, 9, 1, 16, 29, 52, 954, DateTimeKind.Local).AddTicks(1366),
+                            ReservationStart = new DateTime(2024, 9, 1, 14, 29, 52, 954, DateTimeKind.Local).AddTicks(1360),
+                            TimeStamp = new DateTime(2024, 9, 1, 14, 29, 52, 954, DateTimeKind.Local).AddTicks(1375)
                         });
                 });
 
@@ -292,7 +296,7 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
 
                     b.HasIndex("FK_MealId");
 
-                    b.ToTable("MealIngredient");
+                    b.ToTable("MealIngredients");
 
                     b.HasData(
                         new
@@ -389,7 +393,7 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
 
                     b.HasIndex("FK_TableId");
 
-                    b.ToTable("TableBooking");
+                    b.ToTable("TableBookings");
 
                     b.HasData(
                         new
