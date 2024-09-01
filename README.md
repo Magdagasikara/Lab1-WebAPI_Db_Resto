@@ -11,27 +11,27 @@ todo:
 kolla igen
 - IActionResult vs ActionResult
 
-egentligen varje add/delete/update booking borde uppdatera tabell med antalet lediga platser per halvtimme som ligger tillg‰nglig i frontend
+egentligen varje add/delete/update booking borde uppdatera tabell med antalet lediga platser per halvtimme som ligger tillg√§nglig i frontend
 
 CUSTOMER
 
-POST - /api/Customer/AddCustomer
-request body
+POST - /api/Customer/AddCustomer  
+request body  
 {
   "name": "Aldor B",
   "email": "aldor@b.c",
   "phoneNumber": "07666"
 }
 
-DELETE - /api/Customer/DeleteCustomer
-request body
+DELETE - /api/Customer/DeleteCustomer    
+request body  
 {
   "email": "aldor@b.c"
 }
 If wrong email: 404 with response body "No customer with aldor@b.c"
 
-GET - /api/Customer/GetAllCustomers
-response ex
+GET - /api/Customer/GetAllCustomers  
+response ex  
 [
   {
     "name": "Magda",
@@ -45,22 +45,22 @@ response ex
   }
 ]
 
-POST - /api/Customer/GetCustomerByEmail
-request body
+POST - /api/Customer/GetCustomerByEmail  
+request body  
 {
   "email": "aldor@b.c"
 }
 If wrong email: 404 with response body "No customer with aldor@b.c"
 
-PATCH - /api/Customer/UpdateCustomer
-request body:
+PATCH - /api/Customer/UpdateCustomer  
+request body:  
 {
   "email": "magda@m.m",
   "name": "Magda",
   "updatedEmail": "magda@kubien.m",
   "phoneNumber": "076"
 }
-or enough:
+or enough:  
 {
   "email": "magda@kubien.m",
   "name": "Magda KKK",
@@ -70,23 +70,23 @@ or enough:
 
 TABLE
 
-POST - /api/Table/AddTable
-request body:
+POST - /api/Table/AddTable  
+request body:  
 {
   "tableNumber": 5,
   "amountOfPlaces": 7
 }
 // wrong error handling when the same number again! :/
 
-DELETE - /api/Table/DeleteTable
-request body:
+DELETE - /api/Table/DeleteTable  
+request body:  
 {
   "tableNumber": 5
 }
 if table doesnt exist: 404 "No table with 5" // a nicer message would be good of course
 
-GET - /api/Table/GetALlTables
-response body:
+GET - /api/Table/GetALlTables  
+response body:  
 [
   {
     "tableNumber": 1,
@@ -110,11 +110,11 @@ response body:
   }
 ]
 
-GET - /api/Table/GetFreeTables
-parameters:
-time, ex: 2024-09-01T15:29:52.9541091
-reservationHours, ex: 2
-reponse body:
+GET - /api/Table/GetFreeTables  
+parameters:  
+time, ex: 2024-09-01T15:29:52.9541091  
+reservationHours, ex: 2  
+reponse body:  
 [
   {
     "tableNumber": 4,
@@ -122,32 +122,32 @@ reponse body:
   }
 ]
 
-GET - /api/Table/GetFreePlaces
-parameters:
-time, ex: 2024-09-01T15:29:52.9541091
-reservationHours, ex: 2
-reponse body: 2
+GET - /api/Table/GetFreePlaces  
+parameters:  
+time, ex: 2024-09-01T15:29:52.9541091  
+reservationHours, ex: 2  
+response body: 2
 
-POST - /api/Table/GetTableByTableNr
-request body:
+POST - /api/Table/GetTableByTableNr  
+request body:  
 {
   "tableNumber": 3
 }
-response body:
+response body:  
 {
   "tableNumber": 3,
   "amountOfPlaces": 4
 }
 if table doesnt exist: 404 "No table with 5" 
 
-PATCH - /api/Table/UpdateTable
-request body:
+PATCH - /api/Table/UpdateTable  
+request body:  
 {
   "tableNumber": 3,
   "amountOfPlaces": 10,
   "updatedTableNumber": 3
 }
-or only
+or only  
 {
   "tableNumber": 3,
   "amountOfPlaces": 11
@@ -155,8 +155,8 @@ or only
 
 BOOKINGS
 
-POST - /api/Bookings/AddBooking
-request body:
+POST - /api/Bookings/AddBooking  
+request body:  
 {
   "timeStamp": "2024-09-01T15:44:42.649Z",
   "amountOfGuests": 3,
@@ -167,8 +167,8 @@ request body:
 if wrong email: 500 "No customer with magda@m.m" // should be 404 or personalized error
 // problems now again!!
 
-GET - /api/Bookings/GetAllBookings
-response body:
+GET - /api/Bookings/GetAllBookings  
+response body:  
 [
   {
     "bookingNumber": 120240901,
