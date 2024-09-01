@@ -15,7 +15,7 @@ namespace Lab1_WebAPI_Db_Resto
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<RestoContext>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("RestoConnection"));
             });
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
 

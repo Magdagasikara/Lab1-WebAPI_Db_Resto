@@ -24,7 +24,7 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception("Error when adding a new table", ex);
+                throw new Exception("Error when adding a new booking", ex);
             }
         }
 
@@ -79,6 +79,9 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             try
             {
                 return await _context.Bookings
+                    .Include(b=>b.Customer)
+                    .Include(b=>b.TableBookings)
+                        .ThenInclude(tb=>tb.Table)
                     .ToListAsync();
             }
             catch (Exception ex)

@@ -1,5 +1,6 @@
 ﻿using Lab1_WebAPI_Db_Resto.Data.Repositories.IRepositories;
 using Lab1_WebAPI_Db_Resto.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lab1_WebAPI_Db_Resto.Data.Repositories
@@ -90,14 +91,18 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
         {
             try
             {
+                if (tables.Count == 0)
+                {
+                    throw new Exception("Not enough tables for this reservation.");
+                }
                 foreach (var table in tables)
                 {
-                    var tableBooking = new TableBooking { Booking = booking, Table = table };
+                    var tableBooking = new TableBooking { Booking = booking, Table = table/*, FK_BookingId=booking.Id, FK_TableId=table.Id */};
                     await _context.TableBookings.AddAsync(tableBooking);
                 }
                 await _context.SaveChangesAsync();
             }
-            catch (Exception ex){
+            catch (Exception){
                 throw;
             }
         }

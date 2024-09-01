@@ -6,6 +6,7 @@ using Lab1_WebAPI_Db_Resto.Models.ViewModels;
 using Lab1_WebAPI_Db_Resto.Services.IServices;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
+using System.Collections.Generic;
 
 namespace Lab1_WebAPI_Db_Resto.Services
 {
@@ -13,11 +14,13 @@ namespace Lab1_WebAPI_Db_Resto.Services
     {
         private readonly IBookingRepository _bookingRepo;
         private readonly ITableRepository _tableRepo;
+        private readonly ICustomerRepository _customerRepo;
         private readonly IMapper _mapper;
-        public BookingServices(IBookingRepository bookingRepo, ITableRepository tableRepo, IMapper mapper)
+        public BookingServices(IBookingRepository bookingRepo, ITableRepository tableRepo, ICustomerRepository customerRepo, IMapper mapper)
         {
-            _bookingRepo = bookingRepo; 
+            _bookingRepo = bookingRepo;
             _tableRepo = tableRepo;
+            _customerRepo = customerRepo;
             _mapper = mapper;
         }
 
@@ -27,19 +30,16 @@ namespace Lab1_WebAPI_Db_Resto.Services
             {
                 var newBooking = _mapper.Map<Booking>(booking);
                 newBooking.TimeStamp = DateTime.Now;
-                newBooking.BookingNumber = $"{newBooking.Id}{newBooking.TimeStamp:yyyyMMdd}";
                 newBooking.ReservationEnd = booking.ReservationStart.AddHours(booking.ReservationDurationInHours);
-                var freeTables = _tableRepo.BookAndGetTablesByTimeAsync(newBooking);
-                // loopa igenom lediga tills det är tillräckligt med platser för booking och tillskriva dessa
-                //newBooking.TableBookings{ Table=}
-                // HÄR MÅSTE JAG LETA OCH TILLSKRIVA BORD
-                // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                newBooking.Customer = await _customerRepo.GetCustomerByEmailAsync(booking.Email);
+                newBooking.BookingNumber = $"{newBooking.Customer.Id}0{newBooking.TimeStamp:yyyyMMdd}";
+                var freeTables = await _tableRepo.BookAndGetTablesByTimeAsync(newBooking);
+                // här imellan!
                 await _bookingRepo.AddBookingAsync(newBooking);
             }
             catch (Exception ex)
             {
-                throw new Exception("Error adding booking in service", ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -100,7 +100,21 @@ namespace Lab1_WebAPI_Db_Resto.Services
             try
             {
                 var bookings = await _bookingRepo.GetAllBookingsAsync();
-                return _mapper.Map<List<BookingWithTablesListVM>>(bookings);
+                var bookingsWithTables = new List<BookingWithTablesListVM>();
+                    //_mapper.Map<List<BookingWithTablesListVM>>(bookings);
+                foreach (Booking booking in bookings)
+                {
+                    var getBooking = _mapper.Map<BookingWithTablesListVM>(booking);
+                    getBooking.Email = booking.Customer.Email;
+                    getBooking.Tables = new List<TableListVM>();
+                    foreach (var tableBooking in booking.TableBookings)
+                    {
+                        var tablevm=_mapper.Map<TableListVM>(tableBooking.Table);
+                        getBooking.Tables.Add(tablevm);
+                    }
+                    bookingsWithTables.Add(getBooking);
+                }
+                return bookingsWithTables;
             }
             catch (KeyNotFoundException)
             {

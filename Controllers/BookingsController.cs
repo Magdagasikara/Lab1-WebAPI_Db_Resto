@@ -34,8 +34,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         {
             try
             {
-                var x = await _bookingServices.GetAllBookingsAsync();
-                return Ok(x);
+                return Ok(await _bookingServices.GetAllBookingsAsync());
             }
             catch (Exception)
             {
