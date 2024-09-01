@@ -1,5 +1,8 @@
 # Lab1-WebAPI_Db_Resto
 
+Initial Db-plan:  
+![text](https://github.com/Magdagasikara/Lab1-WebAPI_Db_Resto/blob/master/ER.png)
+  
 CUSTOMER  
 
 POST - /api/Customer/AddCustomer  
