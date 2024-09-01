@@ -3,8 +3,9 @@ using Lab1_WebAPI_Db_Resto.Data.Repositories.IRepositories;
 using Lab1_WebAPI_Db_Resto.Models;
 using Lab1_WebAPI_Db_Resto.Models.DTOs;
 using Lab1_WebAPI_Db_Resto.Models.ViewModels;
+using Lab1_WebAPI_Db_Resto.Services.IServices;
 
-namespace Lab1_WebAPI_Db_Resto.Services.IServices
+namespace Lab1_WebAPI_Db_Resto.Services
 {
     public class MealServices : IMealServices
     {
