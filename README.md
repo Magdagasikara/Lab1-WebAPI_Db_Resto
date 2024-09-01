@@ -1,19 +1,5 @@
 # Lab1-WebAPI_Db_Resto
 
-todo:
-- only half-hours possible in booking system
-- default checking for available tables NOW
-- add booking return 404 if user not found'
-- if no empty tables, dont throw an exception but handle empty list of tables instead
-- if reservation duration==0 ignore directly and return error
-- addtable handle when the same table number
-- ViewModels - other names to be shown?
-
-kolla igen
-- IActionResult vs ActionResult
-
-egentligen varje add/delete/update booking borde uppdatera tabell med antalet lediga platser per halvtimme som ligger tillg‰nglig i frontend
-
 CUSTOMER  
 
 POST - /api/Customer/AddCustomer  
@@ -236,7 +222,7 @@ POST - /api/Meals/AddMeal
 request body:  
 {  
   "name": "Bigos",  
-  "description": "Polsk nationalr‰tt!",  
+  "description": "Polsk nationalr√§tt!",  
   "isAvailable": false,  
   "price": 1000  
 }  
@@ -249,7 +235,7 @@ response body:
 [  
  {  
     "name": "Bigos",  
-    "description": "Polsk nationalr‰tt!",  
+    "description": "Polsk nationalr√§tt!",  
     "isAvailable": false,  
     "price": 1000  
   }  
@@ -261,8 +247,22 @@ response body:
 {  
   "id": 3,  
   "name": "Bigos",   
-  "description": "Polsk nationalr‰tt!",  
+  "description": "Polsk nationalr√§tt!",  
   "isAvailable": true,  
   "price": 666  
 }  
 // need to update to get 404 when requesting a non-existant Id  
+
+todo:
+- only half-hours possible in booking system
+- default checking for available tables NOW
+- add booking return 404 if user not found'
+- if no empty tables, dont throw an exception but handle empty list of tables instead
+- if reservation duration==0 ignore directly and return error
+- addtable handle when the same table number
+- ViewModels - other names to be shown?
+
+kolla igen
+- IActionResult vs ActionResult
+
+egentligen varje add/delete/update booking borde uppdatera tabell med antalet lediga platser per halvtimme som ligger tillg√§nglig i frontend
