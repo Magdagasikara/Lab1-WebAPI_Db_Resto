@@ -12,7 +12,7 @@ namespace Lab1_WebAPI_Db_Resto.Models.DTOs
         [Required]
         public DateTime ReservationStart { get; set; }
         [Required]
-        public TimeSpan ReservationDuration{ get; set; }
+        public double ReservationDurationInHours{ get; set; }
         [Required]
         [EmailAddress(ErrorMessage = "Please fill in correct Email-address")]
         [StringLength(100, MinimumLength = 6)]

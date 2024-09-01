@@ -3,6 +3,7 @@ using Lab1_WebAPI_Db_Resto.Models;
 using Lab1_WebAPI_Db_Resto.Models.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
 using System;
 
 namespace Lab1_WebAPI_Db_Resto.Data.Repositories
@@ -27,7 +28,7 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             }
         }
 
-        public async Task DeleteBookingByBookingNumberAsync(int bookingNr)
+        public async Task DeleteBookingByBookingNumberAsync(string bookingNr)
         {
             try
             {
@@ -73,6 +74,19 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             }
         }
 
+        public async Task<IEnumerable<Booking>> GetAllBookingsAsync()
+        {
+            try
+            {
+                return await _context.Bookings
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error getting a list of bookings", ex);
+            }
+        }
+
         public async Task<IEnumerable<Booking>> GetAllBookingsByEmailAsync(string email)
         {
             try
@@ -87,7 +101,7 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             }
         }
 
-        public async Task<Booking> GetBookingByBookingNumberAsync(int bookingNr)
+        public async Task<Booking> GetBookingByBookingNumberAsync(string bookingNr)
         {
             try
             {
@@ -126,7 +140,7 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             }
         }
 
-        public async Task<Booking> GetBookingWithTablesByBookingNumberAsync(int bookingNr)
+        public async Task<Booking> GetBookingWithTablesByBookingNumberAsync(string bookingNr)
         {
             try
             {
@@ -149,9 +163,9 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             }
         }
 
-        public async Task UpdateBookingAsync(int bookingNr, Booking updatedBooking)
+        public async Task UpdateBookingAsync(string bookingNr, Booking updatedBooking)
         {
-            if (updatedBooking == null || bookingNr == 0)
+            if (updatedBooking == null || bookingNr.IsNullOrEmpty())
             {
                 throw new ArgumentNullException(nameof(updatedBooking), "No booking to be updated");
             }
@@ -174,9 +188,9 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             }
         }
 
-        public async Task UpdateBookingTablesAsync(int bookingNr, Booking updatedBooking, List<Models.Table> tables)
+        public async Task UpdateBookingTablesAsync(string bookingNr, Booking updatedBooking, List<Models.Table> tables)
         {
-            if (updatedBooking == null || bookingNr == 0)
+            if (updatedBooking == null || bookingNr.IsNullOrEmpty())
             {
                 throw new ArgumentNullException(nameof(updatedBooking), "No booking to be updated");
             }

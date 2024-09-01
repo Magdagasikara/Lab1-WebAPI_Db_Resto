@@ -13,7 +13,10 @@ namespace Lab1_WebAPI_Db_Resto.Data
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Meal> Meals { get; set; }
         public DbSet<MealCategory> MealCategories { get; set; }
+        public DbSet<MealIngredient> MealIngredients { get; set; }
         public DbSet<Table> Tables { get; set; }
+        public DbSet<TableBooking> TableBookings { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -33,8 +36,8 @@ namespace Lab1_WebAPI_Db_Resto.Data
                     Id = 1,
                     ReservationStart = DateTime.Now,
                     ReservationEnd = DateTime.Now + TimeSpan.FromHours(2),
-                    IsActive = true,
                     TimeStamp = DateTime.Now,
+                    BookingNumber = $"1{DateTime.Now:yyyyMMdd}",
                     FK_CustomerId = 2
                 },
                 new Booking
@@ -42,8 +45,8 @@ namespace Lab1_WebAPI_Db_Resto.Data
                     Id = 2,
                     ReservationStart = DateTime.Now,
                     ReservationEnd = DateTime.Now + TimeSpan.FromHours(2),
-                    IsActive = true,
                     TimeStamp = DateTime.Now,
+                    BookingNumber = $"2{DateTime.Now:yyyyMMdd}",
                     AmountOfGuests = 6,
                     FK_CustomerId = 2
                 });

@@ -74,6 +74,23 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
                 return Problem(ex.Message);
             }
         }
+        [HttpGet("GetFreePlaces")]
+        public async Task<ActionResult<int>> GetFreePlacesByTime(DateTime time, double reservationHours = 2)
+        {
+            try
+            {
+
+                var freeTables = await _tableServices
+                    .GetFreeTablesByTimeAsync(time, reservationHours);
+                var freePlaces = freeTables
+                    .Sum(s =>s.AmountOfPlaces);
+                return Ok(freePlaces);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
 
         [HttpPost("GetTableByTableNr")]
         public async Task<ActionResult<CustomerListVM>> GetTableByTableNr(TableNumberDto table)

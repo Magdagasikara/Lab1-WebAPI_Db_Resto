@@ -9,8 +9,7 @@ namespace Lab1_WebAPI_Db_Resto.Models
     {
         public int Id { get; set; }
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int BookingNumber { get; set; }
+        public string BookingNumber { get; set; }
         [Required]
         public DateTime TimeStamp { get; set; }
         [Required]
