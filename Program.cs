@@ -31,6 +31,8 @@ namespace Lab1_WebAPI_Db_Resto
             builder.Services.AddScoped<ITableServices, TableServices>();
             builder.Services.AddScoped<IBookingRepository, BookingRepository>();
             builder.Services.AddScoped<IBookingServices, BookingServices>();
+            builder.Services.AddScoped<IMealRepository, MealRepository>();
+            builder.Services.AddScoped<IMealServices, MealServices>();
 
             var app = builder.Build();
 

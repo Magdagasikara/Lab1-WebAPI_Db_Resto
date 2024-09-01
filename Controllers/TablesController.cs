@@ -7,10 +7,10 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TableController : ControllerBase
+    public class TablesController : ControllerBase
     {
         private readonly ITableServices _tableServices;
-        public TableController(ITableServices tableServices)
+        public TablesController(ITableServices tableServices)
         {
             _tableServices = tableServices;
         }

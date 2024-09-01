@@ -70,21 +70,25 @@ namespace Lab1_WebAPI_Db_Resto.Data
                 {
                     Id = 1,
                     Name = "Tofu med kroppkakor",
+                    Description = "Det är bara svampsås som saknas",
+                    Price = 100,
                     IsAvailable = false
                 },
                 new Meal
                 {
                     Id = 2,
                     Name = "Pasta aglio e olio",
+                    Description = "Nom nom tres bienos!",
+                    Price = 89,
                     IsAvailable = true
                 }
                 );
-            modelBuilder.Entity<MealIngredient>().HasData(
-                new MealIngredient { Id = 1, FK_MealId = 1, FK_IngredientId = 1 },
-                new MealIngredient { Id = 2, FK_MealId = 1, FK_IngredientId = 4 },
-                new MealIngredient { Id = 3, FK_MealId = 2, FK_IngredientId = 2 },
-                new MealIngredient { Id = 4, FK_MealId = 2, FK_IngredientId = 5 }
-                );
+            //modelBuilder.Entity<MealIngredient>().HasData(
+            //    new MealIngredient { Id = 1, FK_MealId = 1, FK_IngredientId = 1 },
+            //    new MealIngredient { Id = 2, FK_MealId = 1, FK_IngredientId = 4 },
+            //    new MealIngredient { Id = 3, FK_MealId = 2, FK_IngredientId = 2 },
+            //    new MealIngredient { Id = 4, FK_MealId = 2, FK_IngredientId = 5 }
+            //    );
             modelBuilder.Entity<MealCategory>().HasData(
                 new MealCategory { Id = 1, Name = "Starter" },
                 new MealCategory { Id = 2, Name = "Dinner" },

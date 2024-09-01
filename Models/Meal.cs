@@ -9,7 +9,8 @@
         public int Price { get; set; } // no decimals in Sweden 
 
         // no virtuals, we want to load all info
-        public ICollection<MealIngredient>? MealIngredient { get; set; }
-        public ICollection<MealCategory>? MealCategories { get; set; }
+        // to be done on time, I start without ingredients and category
+        //public ICollection<MealIngredient>? MealIngredient { get; set; }
+        //public ICollection<MealCategory>? MealCategories { get; set; }
     }
 }

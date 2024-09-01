@@ -4,10 +4,11 @@ todo:
 - only half-hours possible in booking system
 - default checking for available tables NOW
 - add booking return 404 if user not found'
-- if no empty tables, dont throw an eception but handle empty list of tables instead
+- if no empty tables, dont throw an exception but handle empty list of tables instead
 - if reservation duration==0 ignore directly and return error
 - addtable handle when the same table number
-- 
+- ViewModels - other names to be shown?
+
 kolla igen
 - IActionResult vs ActionResult
 
@@ -68,9 +69,9 @@ or enough:
 }
 
 
-TABLE
+TABLES
 
-POST - /api/Table/AddTable
+POST - /api/Tables/AddTable
 request body:
 {
   "tableNumber": 5,
@@ -78,14 +79,14 @@ request body:
 }
 // wrong error handling when the same number again! :/
 
-DELETE - /api/Table/DeleteTable
+DELETE - /api/Tables/DeleteTable
 request body:
 {
   "tableNumber": 5
 }
 if table doesnt exist: 404 "No table with 5" // a nicer message would be good of course
 
-GET - /api/Table/GetALlTables
+GET - /api/Tables/GetALlTables
 response body:
 [
   {
@@ -110,7 +111,7 @@ response body:
   }
 ]
 
-GET - /api/Table/GetFreeTables
+GET - /api/Tables/GetFreeTables
 parameters:
 time, ex: 2024-09-01T15:29:52.9541091
 reservationHours, ex: 2
@@ -122,13 +123,13 @@ reponse body:
   }
 ]
 
-GET - /api/Table/GetFreePlaces
+GET - /api/Tables/GetFreePlaces
 parameters:
 time, ex: 2024-09-01T15:29:52.9541091
 reservationHours, ex: 2
 reponse body: 2
 
-POST - /api/Table/GetTableByTableNr
+POST - /api/Tables/GetTableByTableNr
 request body:
 {
   "tableNumber": 3
@@ -140,7 +141,7 @@ response body:
 }
 if table doesnt exist: 404 "No table with 5" 
 
-PATCH - /api/Table/UpdateTable
+PATCH - /api/Tables/UpdateTable
 request body:
 {
   "tableNumber": 3,
