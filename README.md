@@ -6,22 +6,27 @@ Initial Db-plan:
 CUSTOMER  
 
 POST - /api/Customer/AddCustomer  
-request body  
+request body:  
+```
 {  
   "name": "Aldor B",  
   "email": "aldor@b.c",  
   "phoneNumber": "07666"  
-}  
+}
+```
   
 DELETE - /api/Customer/DeleteCustomer  
-request body  
+request body:  
+```
 {  
   "email": "aldor@b.c"  
 }  
+```
 If wrong email: 404 with response body "No customer with aldor@b.c"  
 
 GET - /api/Customer/GetAllCustomers  
-response ex  
+response ex:  
+```
 [  
   {  
     "name": "Magda",  
@@ -34,49 +39,60 @@ response ex
     "phoneNumber": "07666"  
   }  
 ]  
+```
 
 POST - /api/Customer/GetCustomerByEmail  
-request body  
+request body:  
+```
 {  
   "email": "aldor@b.c"  
 }  
+```
 If wrong email: 404 with response body "No customer with aldor@b.c"  
 
 PATCH - /api/Customer/UpdateCustomer  
 request body:  
+```
 {  
   "email": "magda@m.m",  
   "name": "Magda",  
   "updatedEmail": "magda@kubien.m",  
   "phoneNumber": "076"  
 }  
+```
 or enough:  
+```
 {  
   "email": "magda@kubien.m",  
   "name": "Magda KKK",  
   "phoneNumber": "076"  
 }  
-
+```
 
 TABLES  
 
 POST - /api/Tables/AddTable  
 request body:  
+```
 {  
   "tableNumber": 5,  
   "amountOfPlaces": 7  
 }  
+```
 // wrong error handling when the same number again! :/  
 
 DELETE - /api/Tables/DeleteTable  
 request body:  
+```
 {  
   "tableNumber": 5  
 }  
+```
 if table doesnt exist: 404 "No table with 5" // a nicer message would be good of course  
 
 GET - /api/Tables/GetALlTables  
 response body:  
+```
 [  
   {  
     "tableNumber": 1,  
@@ -99,18 +115,21 @@ response body:
     "amountOfPlaces": 7  
   }  
 ]  
+```
 
 GET - /api/Tables/GetFreeTables  
 parameters:  
 time, ex: 2024-09-01T15:29:52.9541091  
 reservationHours, ex: 2  
 reponse body:  
+```
 [  
   {  
     "tableNumber": 4,  
     "amountOfPlaces": 2  
   }  
 ]  
+```
 
 GET - /api/Tables/GetFreePlaces  
 parameters:  
@@ -120,33 +139,42 @@ reponse body: 2
 
 POST - /api/Tables/GetTableByTableNr  
 request body:  
+```
 {  
   "tableNumber": 3  
 }  
+```
 response body:  
+```
 {  
   "tableNumber": 3,  
   "amountOfPlaces": 4  
 }  
+```
 if table doesnt exist: 404 "No table with 5"   
 
 PATCH - /api/Tables/UpdateTable  
 request body:  
+```
 {  
   "tableNumber": 3,  
   "amountOfPlaces": 10,  
   "updatedTableNumber": 3  
 }  
+```
 or only  
+```
 {  
   "tableNumber": 3,  
   "amountOfPlaces": 11  
 }  
+```
 
 BOOKINGS  
 
 POST - /api/Bookings/AddBooking  
 request body:  
+```
 {  
   "timeStamp": "2024-09-01T15:44:42.649Z",  
   "amountOfGuests": 3,  
@@ -154,11 +182,13 @@ request body:
   "reservationDurationInHours": 1,  
   "email": "magda@kubien.m"  
 }  
+```
 if wrong email: 500 "No customer with magda@m.m" // should be 404 or personalized error  
 // problems now again!!  
 
 GET - /api/Bookings/GetAllBookings  
 response body:  
+```
 [  
   {  
     "bookingNumber": 120240901,  
@@ -216,6 +246,7 @@ response body:
     "tables": []  
   }  
 ]  
+```
 // the last one indicates a problem being solved (return "no tables" instead of continuing with an empty list)  
 
 
@@ -223,18 +254,21 @@ MEALS
 
 POST - /api/Meals/AddMeal  
 request body:  
+```
 {  
   "name": "Bigos",  
   "description": "Polsk nationalrätt!",  
   "isAvailable": false,  
   "price": 1000  
 }  
+```
 
 DELETE - /api/Meals/DeleteMeal  
 parameter mealId ex 1  
 
 GET - /api/Meals/GetAllMeals
 response body:  
+```
 [  
  {  
     "name": "Bigos",  
@@ -243,10 +277,12 @@ response body:
     "price": 1000  
   }  
 ]  
+```
 
 GET - /api/Meals/GetMealById  
 parameter mealId ex 3  
 response body:  
+```
 {  
   "id": 3,  
   "name": "Bigos",   
@@ -254,18 +290,19 @@ response body:
   "isAvailable": true,  
   "price": 666  
 }  
+```
 // need to update to get 404 when requesting a non-existant Id  
 
 todo:
-- only half-hours possible in booking system
-- default checking for available tables NOW
-- add booking return 404 if user not found'
-- if no empty tables, dont throw an exception but handle empty list of tables instead
-- if reservation duration==0 ignore directly and return error
-- addtable handle when the same table number
-- ViewModels - other names to be shown?
+- only half-hours possible in booking system  
+- default checking for available tables NOW  
+- add booking return 404 if user not found  
+- if no empty tables, dont throw an exception but handle empty list of tables instead  
+- if reservation duration==0 ignore directly and return error  
+- addtable handle when the same table number  
+- ViewModels - other names to be shown?  
 
-kolla igen
-- IActionResult vs ActionResult
+kolla igen  
+- IActionResult vs ActionResult  
 
 egentligen varje add/delete/update booking borde uppdatera tabell med antalet lediga platser per halvtimme som ligger tillgänglig i frontend
