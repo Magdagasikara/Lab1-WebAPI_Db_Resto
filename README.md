@@ -2,6 +2,8 @@
 
 Initial Db-plan:  
 ![text](https://github.com/Magdagasikara/Lab1-WebAPI_Db_Resto/blob/master/ER.png)
+Changes compared with the scheme: "Table per hour" has become "TableBooking" and I didn't have time yet to implement Meal categories and ingredients as they weren't part of our assignment.
+
   
 CUSTOMER  
 
