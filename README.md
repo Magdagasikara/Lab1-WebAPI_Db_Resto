@@ -5,9 +5,9 @@ Initial Db-plan:
 Changes compared with the scheme: "Table per hour" has become "TableBooking" and I didn't have time yet to implement Meal categories and ingredients as they weren't part of our assignment.
 
   
-CUSTOMER  
+**CUSTOMER**  
 
-POST - /api/Customer/AddCustomer  
+**POST** - /api/Customer/**AddCustomer**  
 request body:  
 ```
 {  
@@ -17,7 +17,7 @@ request body:
 }
 ```
   
-DELETE - /api/Customer/DeleteCustomer  
+**DELETE** - /api/Customer/**DeleteCustomer**  
 request body:  
 ```
 {  
@@ -26,7 +26,7 @@ request body:
 ```
 If wrong email: 404 with response body "No customer with aldor@b.c"  
 
-GET - /api/Customer/GetAllCustomers  
+**GET** - /api/Customer/**GetAllCustomers**  
 response ex:  
 ```
 [  
@@ -43,7 +43,7 @@ response ex:
 ]  
 ```
 
-POST - /api/Customer/GetCustomerByEmail  
+**POST** - /api/Customer/**GetCustomerByEmail**  
 request body:  
 ```
 {  
@@ -52,7 +52,7 @@ request body:
 ```
 If wrong email: 404 with response body "No customer with aldor@b.c"  
 
-PATCH - /api/Customer/UpdateCustomer  
+**PATCH** - /api/Customer/**UpdateCustomer**  
 request body:  
 ```
 {  
@@ -71,9 +71,9 @@ or enough:
 }  
 ```
 
-TABLES  
+**TABLES**  
 
-POST - /api/Tables/AddTable  
+**POST** - /api/Tables/**AddTable**  
 request body:  
 ```
 {  
@@ -83,7 +83,7 @@ request body:
 ```
 // wrong error handling when the same number again! :/  
 
-DELETE - /api/Tables/DeleteTable  
+**DELETE** - /api/Tables/**DeleteTable**  
 request body:  
 ```
 {  
@@ -92,7 +92,7 @@ request body:
 ```
 if table doesnt exist: 404 "No table with 5" // a nicer message would be good of course  
 
-GET - /api/Tables/GetALlTables  
+**GET** - /api/Tables/**GetALlTables**  
 response body:  
 ```
 [  
@@ -119,7 +119,7 @@ response body:
 ]  
 ```
 
-GET - /api/Tables/GetFreeTables  
+**GET** - /api/Tables/**GetFreeTables**  
 parameters:  
 time, ex: 2024-09-01T15:29:52.9541091  
 reservationHours, ex: 2  
@@ -133,13 +133,13 @@ reponse body:
 ]  
 ```
 
-GET - /api/Tables/GetFreePlaces  
+**GET** - /api/Tables/**GetFreePlaces**  
 parameters:  
 time, ex: 2024-09-01T15:29:52.9541091  
 reservationHours, ex: 2  
 reponse body: 2  
 
-POST - /api/Tables/GetTableByTableNr  
+**POST** - /api/Tables/**GetTableByTableNr**  
 request body:  
 ```
 {  
@@ -155,7 +155,7 @@ response body:
 ```
 if table doesnt exist: 404 "No table with 5"   
 
-PATCH - /api/Tables/UpdateTable  
+**PATCH** - /api/Tables/**UpdateTable**  
 request body:  
 ```
 {  
@@ -172,9 +172,9 @@ or only
 }  
 ```
 
-BOOKINGS  
+**BOOKINGS**  
 
-POST - /api/Bookings/AddBooking  
+**POST** - /api/Bookings/**AddBooking**  
 request body:  
 ```
 {  
@@ -188,7 +188,7 @@ request body:
 if wrong email: 500 "No customer with magda@m.m" // should be personalized error (probably not 404, or?)  
 
 
-GET - /api/Bookings/GetAllBookings  
+**GET** - /api/Bookings/**GetAllBookings**  
 response body:  
 ```
 [  
@@ -246,9 +246,9 @@ response body:
 ```
 
 
-MEALS  
+**MEALS**  
 
-POST - /api/Meals/AddMeal  
+**POST** - /api/Meals/**AddMeal**  
 request body:  
 ```
 {  
@@ -259,10 +259,10 @@ request body:
 }  
 ```
 
-DELETE - /api/Meals/DeleteMeal  
+**DELETE** - /api/Meals/**DeleteMeal**  
 parameter mealId ex 1  
 
-GET - /api/Meals/GetAllMeals
+**GET** - /api/Meals/**GetAllMeals**
 response body:  
 ```
 [  
@@ -275,7 +275,7 @@ response body:
 ]  
 ```
 
-GET - /api/Meals/GetMealById  
+**GET** - /api/Meals/**GetMealById**  
 parameter mealId ex 3  
 response body:  
 ```
@@ -287,7 +287,7 @@ response body:
 }  
 ```
 
-PATCH - /api/Meals/UpdateMeal
+**PATCH** - /api/Meals/**UpdateMeal**  
 ```
 {  
   "id": 3,  
