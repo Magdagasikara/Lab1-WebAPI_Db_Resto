@@ -192,13 +192,13 @@ GET - /api/Bookings/GetAllBookings
 response body:  
 ```
 [  
-  {  
-    "bookingNumber": 120240901,  
-    "email": "jocke@j.j",  
-    "timeStamp": "2024-09-01T14:29:52.9541192",  
-    "amountOfGuests": 0,  
-    "reservationStart": "2024-09-01T14:29:52.9541091",  
-    "reservationEnd": "2024-09-01T16:29:52.9541183",  
+{  
+    "bookingNumber": "1020240903044235",  
+    "email": "magda@m.m",  
+    "timeStamp": "2024-09-03T16:42:35.7138329",  
+    "amountOfGuests": 5,  
+    "reservationStart": "2024-09-03T19:42:17.026",  
+    "reservationEnd": "2024-09-03T21:42:17.026",  
     "tables": [  
       {  
         "tableNumber": 1,  
@@ -211,27 +211,17 @@ response body:
     ]  
   },  
   {  
-    "bookingNumber": 220240901,  
-    "email": "jocke@j.j",  
-    "timeStamp": "2024-09-01T14:29:52.9541375",  
-    "amountOfGuests": 6,  
-    "reservationStart": "2024-09-01T14:29:52.954136",  
-    "reservationEnd": "2024-09-01T16:29:52.9541366",  
+    "bookingNumber": "3020240903044250",  
+    "email": "aldor@a.a",  
+    "timeStamp": "2024-09-03T16:42:50.5474407",  
+    "amountOfGuests": 5,  
+    "reservationStart": "2024-09-03T19:42:17.026",  
+    "reservationEnd": "2024-09-03T21:42:17.026",  
     "tables": [  
       {  
         "tableNumber": 3,  
-        "amountOfPlaces": 11  
-      }  
-    ]  
-  },  
-  {  
-    "bookingNumber": 2020240901,  
-    "email": "jocke@j.j",  
-    "timeStamp": "2024-09-01T16:24:06.476505",  
-    "amountOfGuests": 2,  
-    "reservationStart": "2024-09-01T14:23:55.017",  
-    "reservationEnd": "2024-09-01T15:23:55.017",  
-    "tables": [  
+        "amountOfPlaces": 4  
+      },  
       {  
         "tableNumber": 4,  
         "amountOfPlaces": 2  
@@ -239,17 +229,21 @@ response body:
     ]  
   },  
   {  
-    "bookingNumber": 1020240901,  
-    "email": "magda@kubien.m",  
-    "timeStamp": "2024-09-01T16:27:03.4756014",  
-    "amountOfGuests": 51,  
-    "reservationStart": "2024-09-01T14:26:32.373",  
-    "reservationEnd": "2024-09-01T15:26:32.373",  
-    "tables": []  
+    "bookingNumber": "3020240903044317",  
+    "email": "aldor@a.a",  
+    "timeStamp": "2024-09-03T16:43:17.3772856",  
+    "amountOfGuests": 2,  
+    "reservationStart": "2024-09-03T21:45:19.026",  
+    "reservationEnd": "2024-09-03T22:45:19.026",  
+    "tables": [  
+      {  
+        "tableNumber": 2,  
+        "amountOfPlaces": 2  
+      }  
+    ]  
   }  
-]  
+]    
 ```
-// the last one indicates a problem being solved (return "no tables" instead of continuing with an empty list)  
 
 
 MEALS  

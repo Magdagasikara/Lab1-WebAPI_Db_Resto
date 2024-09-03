@@ -37,7 +37,7 @@ namespace Lab1_WebAPI_Db_Resto.Data
                     ReservationStart = DateTime.Now,
                     ReservationEnd = DateTime.Now + TimeSpan.FromHours(2),
                     TimeStamp = DateTime.Now,
-                    BookingNumber = $"120240830",
+                    BookingNumber = $"120240830092301",
                     AmountOfGuests = 4,
                     FK_CustomerId = 2
                 },
@@ -47,7 +47,7 @@ namespace Lab1_WebAPI_Db_Resto.Data
                     ReservationStart = DateTime.Now,
                     ReservationEnd = DateTime.Now + TimeSpan.FromHours(2),
                     TimeStamp = DateTime.Now,
-                    BookingNumber = $"220240830",
+                    BookingNumber = $"220240830081911",
                     AmountOfGuests = 6,
                     FK_CustomerId = 2
                 });

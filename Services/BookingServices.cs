@@ -32,10 +32,9 @@ namespace Lab1_WebAPI_Db_Resto.Services
                 newBooking.TimeStamp = DateTime.Now;
                 newBooking.ReservationEnd = booking.ReservationStart.AddHours(booking.ReservationDurationInHours);
                 newBooking.Customer = await _customerRepo.GetCustomerByEmailAsync(booking.Email);
-                newBooking.BookingNumber = $"{newBooking.Customer.Id}0{newBooking.TimeStamp:yyyyMMdd}";
+                newBooking.BookingNumber = $"{newBooking.Customer.Id}0{newBooking.TimeStamp:yyyyMMddhhmmss}";
                 var freeTables = await _tableRepo.BookAndGetTablesByTimeAsync(newBooking);
-                // här imellan!
-                await _bookingRepo.AddBookingAsync(newBooking);
+                // new Booking is created automatically when TableBooking is created
             }
             catch (Exception ex)
             {

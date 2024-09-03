@@ -78,7 +78,7 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
                 }
 
                 // otherwise if there were not enough places return an empty list
-                return new List<Table>();
+                throw new Exception ("Not enough places for this booking");
             }
             catch (Exception ex)
             {
