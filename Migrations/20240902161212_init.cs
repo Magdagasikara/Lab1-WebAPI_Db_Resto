@@ -115,48 +115,16 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FK_IngredientId = table.Column<int>(type: "int", nullable: false),
-                    FK_MealId = table.Column<int>(type: "int", nullable: false)
+                    IngredientId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MealIngredients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MealIngredients_Ingredients_FK_IngredientId",
-                        column: x => x.FK_IngredientId,
+                        name: "FK_MealIngredients_Ingredients_IngredientId",
+                        column: x => x.IngredientId,
                         principalTable: "Ingredients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MealIngredients_Meals_FK_MealId",
-                        column: x => x.FK_MealId,
-                        principalTable: "Meals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MealMealCategory",
-                columns: table => new
-                {
-                    MealCategoriesId = table.Column<int>(type: "int", nullable: false),
-                    MealsId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MealMealCategory", x => new { x.MealCategoriesId, x.MealsId });
-                    table.ForeignKey(
-                        name: "FK_MealMealCategory_MealCategories_MealCategoriesId",
-                        column: x => x.MealCategoriesId,
-                        principalTable: "MealCategories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MealMealCategory_Meals_MealsId",
-                        column: x => x.MealsId,
-                        principalTable: "Meals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -225,8 +193,8 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 columns: new[] { "Id", "Description", "IsAvailable", "Name", "Price" },
                 values: new object[,]
                 {
-                    { 1, null, false, "Tofu med kroppkakor", 0 },
-                    { 2, null, true, "Pasta aglio e olio", 0 }
+                    { 1, "Det är bara svampsås som saknas", false, "Tofu med kroppkakor", 100 },
+                    { 2, "Nom nom tres bienos!", true, "Pasta aglio e olio", 89 }
                 });
 
             migrationBuilder.InsertData(
@@ -245,19 +213,8 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 columns: new[] { "Id", "AmountOfGuests", "BookingNumber", "FK_CustomerId", "ReservationEnd", "ReservationStart", "TimeStamp" },
                 values: new object[,]
                 {
-                    { 1, 0, "120240901", 2, new DateTime(2024, 9, 1, 16, 29, 52, 954, DateTimeKind.Local).AddTicks(1183), new DateTime(2024, 9, 1, 14, 29, 52, 954, DateTimeKind.Local).AddTicks(1091), new DateTime(2024, 9, 1, 14, 29, 52, 954, DateTimeKind.Local).AddTicks(1192) },
-                    { 2, 6, "220240901", 2, new DateTime(2024, 9, 1, 16, 29, 52, 954, DateTimeKind.Local).AddTicks(1366), new DateTime(2024, 9, 1, 14, 29, 52, 954, DateTimeKind.Local).AddTicks(1360), new DateTime(2024, 9, 1, 14, 29, 52, 954, DateTimeKind.Local).AddTicks(1375) }
-                });
-
-            migrationBuilder.InsertData(
-                table: "MealIngredients",
-                columns: new[] { "Id", "FK_IngredientId", "FK_MealId" },
-                values: new object[,]
-                {
-                    { 1, 1, 1 },
-                    { 2, 4, 1 },
-                    { 3, 2, 2 },
-                    { 4, 5, 2 }
+                    { 1, 4, "120240830", 2, new DateTime(2024, 9, 2, 20, 12, 11, 650, DateTimeKind.Local).AddTicks(3619), new DateTime(2024, 9, 2, 18, 12, 11, 650, DateTimeKind.Local).AddTicks(3554), new DateTime(2024, 9, 2, 18, 12, 11, 650, DateTimeKind.Local).AddTicks(3624) },
+                    { 2, 6, "220240830", 2, new DateTime(2024, 9, 2, 20, 12, 11, 650, DateTimeKind.Local).AddTicks(3634), new DateTime(2024, 9, 2, 18, 12, 11, 650, DateTimeKind.Local).AddTicks(3632), new DateTime(2024, 9, 2, 18, 12, 11, 650, DateTimeKind.Local).AddTicks(3636) }
                 });
 
             migrationBuilder.InsertData(
@@ -288,19 +245,9 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_MealIngredients_FK_IngredientId",
+                name: "IX_MealIngredients_IngredientId",
                 table: "MealIngredients",
-                column: "FK_IngredientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MealIngredients_FK_MealId",
-                table: "MealIngredients",
-                column: "FK_MealId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MealMealCategory_MealsId",
-                table: "MealMealCategory",
-                column: "MealsId");
+                column: "IngredientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TableBookings_FK_BookingId",
@@ -323,22 +270,19 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "MealCategories");
+
+            migrationBuilder.DropTable(
                 name: "MealIngredients");
 
             migrationBuilder.DropTable(
-                name: "MealMealCategory");
+                name: "Meals");
 
             migrationBuilder.DropTable(
                 name: "TableBookings");
 
             migrationBuilder.DropTable(
                 name: "Ingredients");
-
-            migrationBuilder.DropTable(
-                name: "MealCategories");
-
-            migrationBuilder.DropTable(
-                name: "Meals");
 
             migrationBuilder.DropTable(
                 name: "Bookings");

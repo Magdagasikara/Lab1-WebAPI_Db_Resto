@@ -286,14 +286,25 @@ parameter mealId ex 3
 response body:  
 ```
 {  
-  "id": 3,  
   "name": "Bigos",   
   "description": "Polsk nationalrätt!",  
   "isAvailable": true,  
   "price": 666  
 }  
 ```
+
+PATCH - /api/Meals/UpdateMeal
+```
+{  
+  "id": 3,  
+  "name": "Bigos",   
+  "description": "Polsk nationalrätt fast inte den godaste - eller?",  
+  "isAvailable": false,  
+  "price": 999  
+}  
+```
 // need to update to get 404 when requesting a non-existant Id  
+
 
 todo:
 - only half-hours possible in booking system  

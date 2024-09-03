@@ -6,6 +6,6 @@ namespace Lab1_WebAPI_Db_Resto.Models.DTOs
     public class BookingNumberDto
     {
         [Required]
-        public int BookingNumber { get; set; }
+        public string BookingNumber { get; set; }
     }
 }

@@ -47,9 +47,6 @@ namespace Lab1_WebAPI_Db_Resto.Services
         {
             try
             {
-                // HÄR MÅSTE JAG TA BORT FRÅN TABLEBOOKING TABELLEN OCKSÅ
-                // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 await _bookingRepo.DeleteBookingByBookingNumberAsync(bookingNr);
             }
             catch (KeyNotFoundException)

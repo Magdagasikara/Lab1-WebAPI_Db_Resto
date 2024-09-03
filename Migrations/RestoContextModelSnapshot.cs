@@ -62,22 +62,22 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                         new
                         {
                             Id = 1,
-                            AmountOfGuests = 0,
-                            BookingNumber = "120240901",
+                            AmountOfGuests = 4,
+                            BookingNumber = "120240830",
                             FK_CustomerId = 2,
-                            ReservationEnd = new DateTime(2024, 9, 1, 16, 29, 52, 954, DateTimeKind.Local).AddTicks(1183),
-                            ReservationStart = new DateTime(2024, 9, 1, 14, 29, 52, 954, DateTimeKind.Local).AddTicks(1091),
-                            TimeStamp = new DateTime(2024, 9, 1, 14, 29, 52, 954, DateTimeKind.Local).AddTicks(1192)
+                            ReservationEnd = new DateTime(2024, 9, 2, 20, 12, 11, 650, DateTimeKind.Local).AddTicks(3619),
+                            ReservationStart = new DateTime(2024, 9, 2, 18, 12, 11, 650, DateTimeKind.Local).AddTicks(3554),
+                            TimeStamp = new DateTime(2024, 9, 2, 18, 12, 11, 650, DateTimeKind.Local).AddTicks(3624)
                         },
                         new
                         {
                             Id = 2,
                             AmountOfGuests = 6,
-                            BookingNumber = "220240901",
+                            BookingNumber = "220240830",
                             FK_CustomerId = 2,
-                            ReservationEnd = new DateTime(2024, 9, 1, 16, 29, 52, 954, DateTimeKind.Local).AddTicks(1366),
-                            ReservationStart = new DateTime(2024, 9, 1, 14, 29, 52, 954, DateTimeKind.Local).AddTicks(1360),
-                            TimeStamp = new DateTime(2024, 9, 1, 14, 29, 52, 954, DateTimeKind.Local).AddTicks(1375)
+                            ReservationEnd = new DateTime(2024, 9, 2, 20, 12, 11, 650, DateTimeKind.Local).AddTicks(3634),
+                            ReservationStart = new DateTime(2024, 9, 2, 18, 12, 11, 650, DateTimeKind.Local).AddTicks(3632),
+                            TimeStamp = new DateTime(2024, 9, 2, 18, 12, 11, 650, DateTimeKind.Local).AddTicks(3636)
                         });
                 });
 
@@ -214,16 +214,18 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                         new
                         {
                             Id = 1,
+                            Description = "Det är bara svampsås som saknas",
                             IsAvailable = false,
                             Name = "Tofu med kroppkakor",
-                            Price = 0
+                            Price = 100
                         },
                         new
                         {
                             Id = 2,
+                            Description = "Nom nom tres bienos!",
                             IsAvailable = true,
                             Name = "Pasta aglio e olio",
-                            Price = 0
+                            Price = 89
                         });
                 });
 
@@ -284,45 +286,14 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("FK_IngredientId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FK_MealId")
+                    b.Property<int?>("IngredientId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FK_IngredientId");
-
-                    b.HasIndex("FK_MealId");
+                    b.HasIndex("IngredientId");
 
                     b.ToTable("MealIngredients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FK_IngredientId = 1,
-                            FK_MealId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FK_IngredientId = 4,
-                            FK_MealId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            FK_IngredientId = 2,
-                            FK_MealId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            FK_IngredientId = 5,
-                            FK_MealId = 2
-                        });
                 });
 
             modelBuilder.Entity("Lab1_WebAPI_Db_Resto.Models.Table", b =>
@@ -416,21 +387,6 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MealMealCategory", b =>
-                {
-                    b.Property<int>("MealCategoriesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MealsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MealCategoriesId", "MealsId");
-
-                    b.HasIndex("MealsId");
-
-                    b.ToTable("MealMealCategory");
-                });
-
             modelBuilder.Entity("Lab1_WebAPI_Db_Resto.Models.Booking", b =>
                 {
                     b.HasOne("Lab1_WebAPI_Db_Resto.Models.Customer", "Customer")
@@ -444,21 +400,9 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
 
             modelBuilder.Entity("Lab1_WebAPI_Db_Resto.Models.MealIngredient", b =>
                 {
-                    b.HasOne("Lab1_WebAPI_Db_Resto.Models.Ingredient", "Ingredient")
+                    b.HasOne("Lab1_WebAPI_Db_Resto.Models.Ingredient", null)
                         .WithMany("MealIngredient")
-                        .HasForeignKey("FK_IngredientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Lab1_WebAPI_Db_Resto.Models.Meal", "Meal")
-                        .WithMany("MealIngredient")
-                        .HasForeignKey("FK_MealId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ingredient");
-
-                    b.Navigation("Meal");
+                        .HasForeignKey("IngredientId");
                 });
 
             modelBuilder.Entity("Lab1_WebAPI_Db_Resto.Models.TableBooking", b =>
@@ -480,21 +424,6 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                     b.Navigation("Table");
                 });
 
-            modelBuilder.Entity("MealMealCategory", b =>
-                {
-                    b.HasOne("Lab1_WebAPI_Db_Resto.Models.MealCategory", null)
-                        .WithMany()
-                        .HasForeignKey("MealCategoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Lab1_WebAPI_Db_Resto.Models.Meal", null)
-                        .WithMany()
-                        .HasForeignKey("MealsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Lab1_WebAPI_Db_Resto.Models.Booking", b =>
                 {
                     b.Navigation("TableBookings");
@@ -506,11 +435,6 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                 });
 
             modelBuilder.Entity("Lab1_WebAPI_Db_Resto.Models.Ingredient", b =>
-                {
-                    b.Navigation("MealIngredient");
-                });
-
-            modelBuilder.Entity("Lab1_WebAPI_Db_Resto.Models.Meal", b =>
                 {
                     b.Navigation("MealIngredient");
                 });

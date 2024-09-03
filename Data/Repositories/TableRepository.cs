@@ -74,7 +74,7 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
                         await BookTablesAsync(booking, bookedTables);
                         return bookedTables;
                     }
-                    break;
+                    //break;
                 }
 
                 // otherwise if there were not enough places return an empty list

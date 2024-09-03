@@ -34,6 +34,10 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             {
                 var booking = await GetBookingByBookingNumberAsync(bookingNr);
                 _context.Bookings.Remove(booking);
+                var tableBookings = await _context.TableBookings
+                    .Where(b => b.Booking == booking)
+                    .ToListAsync();
+                _context.TableBookings.RemoveRange(tableBookings);
                 await _context.SaveChangesAsync();
             }
             catch (KeyNotFoundException)

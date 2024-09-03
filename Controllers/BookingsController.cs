@@ -42,6 +42,20 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
         }
 
+        [HttpDelete("DeleteBooking")]
+        public async Task<ActionResult> DeleteBooking(BookingNumberDto booking)
+        {
+            try
+            {
+                await _bookingServices.DeleteBookingByBookingNumberAsync(booking.BookingNumber);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
 
     }
 }
