@@ -81,7 +81,6 @@ request body:
   "amountOfPlaces": 7  
 }  
 ```
-// wrong error handling when the same number again! :/  
 
 **DELETE** - /api/Tables/**DeleteTable**  
 request body:  
