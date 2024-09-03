@@ -22,7 +22,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             try
             {
                 await _tableServices.AddTableAsync(table);
-                return Ok();
+                return Created();
             }
             //catch (DbUpdateException){}
             catch (Exception ex)

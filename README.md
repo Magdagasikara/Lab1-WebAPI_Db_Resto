@@ -306,6 +306,7 @@ todo:
 - only half-hours possible in booking system  
 - default checking for available tables NOW  
 - ViewModels - other names to be shown?  
+- status codes, status codes, status codes...
 
 kolla igen  
 - IActionResult vs ActionResult  

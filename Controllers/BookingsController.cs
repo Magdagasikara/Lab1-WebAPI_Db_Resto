@@ -22,7 +22,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             try
             {
                 await _bookingServices.AddBookingAsync(booking);
-                return Ok();
+                return Created();
             }
             catch (KeyNotFoundException ex)
             {

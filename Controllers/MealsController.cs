@@ -24,7 +24,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             try
             {
                 await _mealServices.AddMealAsync(meal);
-                return Ok();
+                return Created();
             }
             catch (Exception ex)
             {
