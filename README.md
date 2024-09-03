@@ -185,8 +185,8 @@ request body:
   "email": "magda@kubien.m"  
 }  
 ```
-if wrong email: 500 "No customer with magda@m.m" // should be 404 or personalized error  
-// problems now again!!  
+if wrong email: 500 "No customer with magda@m.m" // should be personalized error (probably not 404, or?)  
+
 
 GET - /api/Bookings/GetAllBookings  
 response body:  
