@@ -32,7 +32,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
         }
 
-        [HttpDelete("DeleteMeal")]
+        [HttpDelete("DeleteMeal/{mealId}")]
         public async Task<ActionResult> DeleteMealById(int mealId)
         {
             try
@@ -63,7 +63,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
         }
 
-        [HttpPost("GetMealById")] // ID shouldnt be exposed externally, I still need to find a good replacement
+        [HttpPost("GetMealById/{mealId}")] // ID shouldnt be exposed externally, I still need to find a good replacement
         public async Task<ActionResult<MealListVM>> GetMealById(int mealId)
         {
             try

@@ -185,7 +185,7 @@ request body:
   "email": "magda@kubien.m"  
 }  
 ```
-if wrong email: 500 "No customer with magda@m.m" // should be personalized error (probably not 404, or?)  
+if wrong email: 404 "No customer with magda@m.m" 
 
 
 **GET** - /api/Bookings/**GetAllBookings**  
@@ -245,6 +245,9 @@ response body:
 ]    
 ```
 
+**DELETE** - /api/Bookings/**DeleteBooking/{bookingNumber}**  
+Parameter ex 120240830
+
 
 **MEALS**  
 
@@ -259,7 +262,7 @@ request body:
 }  
 ```
 
-**DELETE** - /api/Meals/**DeleteMeal**  
+**DELETE** - /api/Meals/**DeleteMeal/{mealId}**  
 parameter mealId ex 1  
 
 **GET** - /api/Meals/**GetAllMeals**
@@ -275,7 +278,7 @@ response body:
 ]  
 ```
 
-**GET** - /api/Meals/**GetMealById**  
+**GET** - /api/Meals/**GetMealById/{mealId}**  
 parameter mealId ex 3  
 response body:  
 ```
@@ -303,10 +306,6 @@ response body:
 todo:
 - only half-hours possible in booking system  
 - default checking for available tables NOW  
-- add booking return 404 if user not found  
-- if no empty tables, dont throw an exception but handle empty list of tables instead  
-- if reservation duration==0 ignore directly and return error  
-- addtable handle when the same table number  
 - ViewModels - other names to be shown?  
 
 kolla igen  

@@ -5,6 +5,10 @@ namespace Lab1_WebAPI_Db_Resto.Models.DTOs
 {
     public class BookingWithTablesDto
     {
+
+        // not yet implemented
+        [Required]
+        public string BookingNumber { get; set; }
         [Required]
         public DateTime TimeStamp { get; set; }
         [Required]

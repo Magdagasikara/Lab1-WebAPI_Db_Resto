@@ -24,9 +24,13 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
                 await _bookingServices.AddBookingAsync(booking);
                 return Ok();
             }
-            catch (Exception)
+            catch (KeyNotFoundException ex)
             {
-                throw;
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
             }
         }
         [HttpGet("GetAllBookings")]
@@ -36,23 +40,23 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             {
                 return Ok(await _bookingServices.GetAllBookingsAsync());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return Problem(ex.Message);
             }
         }
 
-        [HttpDelete("DeleteBooking")]
-        public async Task<ActionResult> DeleteBooking(BookingNumberDto booking)
+        [HttpDelete("DeleteBooking/{bookingNumber}")]
+        public async Task<ActionResult> DeleteBooking(string bookingNumber)
         {
             try
             {
-                await _bookingServices.DeleteBookingByBookingNumberAsync(booking.BookingNumber);
+                await _bookingServices.DeleteBookingByBookingNumberAsync(bookingNumber);
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return Problem(ex.Message);
             }
 
         }

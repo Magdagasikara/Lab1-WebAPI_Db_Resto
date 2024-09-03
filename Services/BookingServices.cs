@@ -36,9 +36,13 @@ namespace Lab1_WebAPI_Db_Resto.Services
                 var freeTables = await _tableRepo.BookAndGetTablesByTimeAsync(newBooking);
                 // new Booking is created automatically when TableBooking is created
             }
-            catch (Exception ex)
+            catch (KeyNotFoundException)
             {
-                throw new Exception(ex.Message);
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 

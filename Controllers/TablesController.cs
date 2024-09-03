@@ -2,6 +2,7 @@
 using Lab1_WebAPI_Db_Resto.Models.ViewModels;
 using Lab1_WebAPI_Db_Resto.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lab1_WebAPI_Db_Resto.Controllers
 {
@@ -23,6 +24,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
                 await _tableServices.AddTableAsync(table);
                 return Ok();
             }
+            //catch (DbUpdateException){}
             catch (Exception ex)
             {
                 return Problem(ex.Message);

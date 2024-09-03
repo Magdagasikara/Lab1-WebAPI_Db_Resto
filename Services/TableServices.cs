@@ -4,6 +4,7 @@ using Lab1_WebAPI_Db_Resto.Models;
 using Lab1_WebAPI_Db_Resto.Models.DTOs;
 using Lab1_WebAPI_Db_Resto.Models.ViewModels;
 using Lab1_WebAPI_Db_Resto.Services.IServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lab1_WebAPI_Db_Resto.Services
 {
@@ -23,6 +24,10 @@ namespace Lab1_WebAPI_Db_Resto.Services
             {
                 var newTable = _mapper.Map<Table>(table);
                 await _tableRepo.AddTableAsync(newTable);
+            }
+            catch (DbUpdateException)
+            {
+                throw;
             }
             catch (Exception ex)
             {

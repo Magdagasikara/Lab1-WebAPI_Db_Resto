@@ -20,6 +20,10 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
                 await _context.Tables.AddAsync(table);
                 await _context.SaveChangesAsync();
             }
+            catch (DbUpdateException ex)
+            {
+                throw new DbUpdateException("Probably not a unique table number", ex);
+            }
             catch (Exception ex)
             {
                 throw new Exception("Error when adding a new table", ex);
@@ -71,10 +75,11 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
                     if (prebookedPlaces >= amountOfGuests)
                     {
                         //remove excessive tables in case fewer bigger ones are enough
-                        thirdMatch=thirdMatch.OrderByDescending(tm => tm.AmountOfPlaces).ToList();
+                        thirdMatch = thirdMatch.OrderByDescending(tm => tm.AmountOfPlaces).ToList();
                         var bookedTables = new List<Table>();
                         prebookedPlaces = 0;
-                        foreach (var tb in thirdMatch) {
+                        foreach (var tb in thirdMatch)
+                        {
                             prebookedPlaces += tb.AmountOfPlaces;
                             bookedTables.Add(tb);
                             if (prebookedPlaces >= amountOfGuests) break;
