@@ -70,15 +70,24 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
                     thirdMatch.Add(table);
                     if (prebookedPlaces >= amountOfGuests)
                     {
-                        var bookedTables = thirdMatch;
+                        //remove excessive tables in case fewer bigger ones are enough
+                        thirdMatch=thirdMatch.OrderByDescending(tm => tm.AmountOfPlaces).ToList();
+                        var bookedTables = new List<Table>();
+                        prebookedPlaces = 0;
+                        foreach (var tb in thirdMatch) {
+                            prebookedPlaces += tb.AmountOfPlaces;
+                            bookedTables.Add(tb);
+                            if (prebookedPlaces >= amountOfGuests) break;
+                        }
+
                         await BookTablesAsync(booking, bookedTables);
                         return bookedTables;
                     }
-                    //break;
+
                 }
 
                 // otherwise if there were not enough places return an empty list
-                throw new Exception ("Not enough places for this booking");
+                throw new Exception("Not enough places for this booking");
             }
             catch (Exception ex)
             {
@@ -102,7 +111,8 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
                 }
                 await _context.SaveChangesAsync();
             }
-            catch (Exception){
+            catch (Exception)
+            {
                 throw;
             }
         }
