@@ -5,7 +5,9 @@ Initial Db-plan:
 Changes compared with the scheme: "Table per hour" has become "TableBooking" and I didn't have time yet to implement Meal categories and ingredients as they weren't part of our assignment.
 
   
+___
 **CUSTOMER**  
+___
 
 **POST** - /api/Customer/**AddCustomer**  
 request body:  
@@ -71,7 +73,9 @@ or enough:
 }  
 ```
 
+___
 **TABLES**  
+___
 
 **POST** - /api/Tables/**AddTable**  
 request body:  
@@ -171,7 +175,9 @@ or only
 }  
 ```
 
+___
 **BOOKINGS**  
+___
 
 **POST** - /api/Bookings/**AddBooking**  
 request body:  
@@ -186,6 +192,8 @@ request body:
 ```
 if wrong email: 404 "No customer with magda@m.m" 
 
+**DELETE** - /api/Bookings/**DeleteBooking/{bookingNumber}**  
+parameter bookingNumber ex 3020240903044317
 
 **GET** - /api/Bookings/**GetAllBookings**  
 response body:  
@@ -244,11 +252,47 @@ response body:
 ]    
 ```
 
-**DELETE** - /api/Bookings/**DeleteBooking/{bookingNumber}**  
-Parameter ex 120240830
+**GET** - /api/Bookings/**GetBooking/{bookingNumber}**    
+parameter bookingNumber ex 1020240903080136  
+response body:  
+```
+{  
+  "bookingNumber": "1020240903080136",  
+  "email": "magda@m.m",  
+  "timeStamp": "2024-09-03T20:01:36.3464983",  
+  "amountOfGuests": 7,  
+  "reservationStart": "2024-09-30T18:01:16.564",  
+  "reservationEnd": "2024-09-30T20:01:16.564",  
+  "tables": [  
+    {  
+      "tableNumber": 1,  
+      "amountOfPlaces": 4  
+    },  
+    {  
+      "tableNumber": 3,  
+      "amountOfPlaces": 4  
+    }  
+  ]  
+}  
+```
 
+**GET** - /api/Bookings/**GetBookingWithoutTables/{bookingNumber}**    
+parameter bookingNumber ex 1020240903080136  
+response body:  
+```
+{  
+  "bookingNumber": "1020240903080136",  
+  "email": "magda@m.m",  
+  "timeStamp": "2024-09-03T20:01:36.3464983",  
+  "amountOfGuests": 7,  
+  "reservationStart": "2024-09-30T18:01:16.564",  
+  "reservationEnd": "2024-09-30T20:01:16.564"  
+}  
+```
 
+___
 **MEALS**  
+___
 
 **POST** - /api/Meals/**AddMeal**  
 request body:  

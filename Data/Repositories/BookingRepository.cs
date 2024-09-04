@@ -113,6 +113,9 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             try
             {
                 var booking = await _context.Bookings
+                    .Include(b => b.Customer)
+                    .Include(b => b.TableBookings)
+                        .ThenInclude(tb => tb.Table)
                     .SingleOrDefaultAsync(c => c.BookingNumber == bookingNr);
                 if (booking != null)
                 {

@@ -33,18 +33,6 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
                 return Problem(ex.Message);
             }
         }
-        [HttpGet("GetAllBookings")]
-        public async Task<ActionResult<BookingListVM>> GetAllBookings()
-        {
-            try
-            {
-                return Ok(await _bookingServices.GetAllBookingsAsync());
-            }
-            catch (Exception ex)
-            {
-                return Problem(ex.Message);
-            }
-        }
 
         [HttpDelete("DeleteBooking/{bookingNumber}")]
         public async Task<ActionResult> DeleteBooking(string bookingNumber)
@@ -58,7 +46,45 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             {
                 return Problem(ex.Message);
             }
+        }
 
+        [HttpGet("GetAllBookings")]
+        public async Task<ActionResult<BookingListVM>> GetAllBookings()
+        {
+            try
+            {
+                return Ok(await _bookingServices.GetAllBookingsAsync());
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+
+        [HttpGet("GetBookingWithoutTables/{bookingNumber}")]
+        public async Task<ActionResult<BookingListVM>> GetBookingByBookingNumber(string bookingNumber)
+        {
+            try
+            {
+                return Ok(await _bookingServices.GetBookingByBookingNumberAsync(bookingNumber));
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+        [HttpGet("GetBooking/{bookingNumber}")]
+        public async Task<ActionResult<BookingWithTablesListVM>> GetBookingWithTablesByBookingNumber(string bookingNumber)
+        {
+            try
+            {
+                return Ok(await _bookingServices.GetBookingWithTablesByBookingNumberAsync(bookingNumber));
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
 
     }

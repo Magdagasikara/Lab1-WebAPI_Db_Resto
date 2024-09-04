@@ -101,7 +101,6 @@ namespace Lab1_WebAPI_Db_Resto.Services
             {
                 var bookings = await _bookingRepo.GetAllBookingsAsync();
                 var bookingsWithTables = new List<BookingWithTablesListVM>();
-                    //_mapper.Map<List<BookingWithTablesListVM>>(bookings);
                 foreach (Booking booking in bookings)
                 {
                     var getBooking = _mapper.Map<BookingWithTablesListVM>(booking);
@@ -149,7 +148,9 @@ namespace Lab1_WebAPI_Db_Resto.Services
             try
             {
                 var booking = await _bookingRepo.GetBookingByBookingNumberAsync(bookingNr);
-                return _mapper.Map<BookingListVM>(booking);
+                var getBooking = _mapper.Map<BookingListVM>(booking);
+                getBooking.Email = booking.Customer.Email;
+                return getBooking;
             }
             catch (KeyNotFoundException)
             {
@@ -180,10 +181,16 @@ namespace Lab1_WebAPI_Db_Resto.Services
         {
             try
             {
-                var booking = await _bookingRepo.GetBookingWithTablesByBookingNumberAsync(bookingNr);
-                return _mapper.Map<BookingWithTablesListVM>(booking);
-                // komplettera med tables kanske behövs det!!!!!!!!
-                // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                var booking = await _bookingRepo.GetBookingByBookingNumberAsync(bookingNr);
+                var getBooking = _mapper.Map<BookingWithTablesListVM>(booking);
+                getBooking.Email = booking.Customer.Email;
+                getBooking.Tables = new List<TableListVM>();
+                foreach (var tableBooking in booking.TableBookings)
+                {
+                    var tablevm = _mapper.Map<TableListVM>(tableBooking.Table);
+                    getBooking.Tables.Add(tablevm);
+                }
+                return getBooking;
             }
             catch (KeyNotFoundException)
             {
