@@ -6,10 +6,10 @@ Changes compared with the scheme: "Table per hour" has become "TableBooking" and
 
   
 ___
-**CUSTOMER**  
+**CUSTOMERS**  
 ___
 
-**POST** - /api/Customer/**AddCustomer**  
+**POST - Add customer** - /api/customers/add  
 request body:  
 ```
 {  
@@ -19,7 +19,7 @@ request body:
 }
 ```
   
-**DELETE** - /api/Customer/**DeleteCustomer**  
+**DELETE - Delete a customer** - /api/customers/customer/delete  
 request body:  
 ```
 {  
@@ -28,7 +28,7 @@ request body:
 ```
 If wrong email: 404 with response body "No customer with aldor@b.c"  
 
-**GET** - /api/Customer/**GetAllCustomers**  
+**GET - Get all customers** - /api/customers  
 response ex:  
 ```
 [  
@@ -45,7 +45,7 @@ response ex:
 ]  
 ```
 
-**POST** - /api/Customer/**GetCustomerByEmail**  
+**POST - Get customer by e-mail** - /api/customers/customer  
 request body:  
 ```
 {  
@@ -54,7 +54,7 @@ request body:
 ```
 If wrong email: 404 with response body "No customer with aldor@b.c"  
 
-**PATCH** - /api/Customer/**UpdateCustomer**  
+**PATCH - Update a customer** - /api/customers/customer/update  
 request body:  
 ```
 {  
@@ -77,7 +77,7 @@ ___
 **TABLES**  
 ___
 
-**POST** - /api/Tables/**AddTable**  
+**POST - Add a table** - /api/tables/add  
 request body:  
 ```
 {  
@@ -86,7 +86,7 @@ request body:
 }  
 ```
 
-**DELETE** - /api/Tables/**DeleteTable**  
+**DELETE - Delete a table** - /api/tables/delete  
 request body:  
 ```
 {  
@@ -95,7 +95,7 @@ request body:
 ```
 if table doesnt exist: 404 "No table with 5" // a nicer message would be good of course  
 
-**GET** - /api/Tables/**GetALlTables**  
+**GET - Get all tables** - /api/tables  
 response body:  
 ```
 [  
@@ -122,7 +122,7 @@ response body:
 ]  
 ```
 
-**GET** - /api/Tables/**GetFreeTables**  
+**GET - Get available tables** - /api/tables/available  
 parameters:  
 time, ex: 2024-09-01T15:29:52.9541091  
 reservationHours, ex: 2  
@@ -136,13 +136,14 @@ reponse body:
 ]  
 ```
 
-**GET** - /api/Tables/**GetFreePlaces**  
+**GET - Get number of available seats** - /api/tables/places/available  
 parameters:  
 time, ex: 2024-09-01T15:29:52.9541091  
 reservationHours, ex: 2  
 reponse body: 2  
 
-**POST** - /api/Tables/**GetTableByTableNr**  
+
+**POST - Get a table by table number** - /api/tables/table  
 request body:  
 ```
 {  
@@ -158,7 +159,7 @@ response body:
 ```
 if table doesnt exist: 404 "No table with 5"   
 
-**PATCH** - /api/Tables/**UpdateTable**  
+**PATCH - Update a table** - /api/tables/update  
 request body:  
 ```
 {  
@@ -179,7 +180,7 @@ ___
 **BOOKINGS**  
 ___
 
-**POST** - /api/Bookings/**AddBooking**  
+**POST - Add a booking** - /api/bookings/add  
 request body:  
 ```
 {  
@@ -192,10 +193,10 @@ request body:
 ```
 if wrong email: 404 "No customer with magda@m.m" 
 
-**DELETE** - /api/Bookings/**DeleteBooking/{bookingNumber}**  
+**DELETE - Delete a booking** - /api/bookings/booking/{bookingNumber}/delete  
 parameter bookingNumber ex 3020240903044317
 
-**GET** - /api/Bookings/**GetAllBookings**  
+**GET - Get all bookings** - /api/bookings  
 response body:  
 ```
 [  
@@ -252,7 +253,7 @@ response body:
 ]    
 ```
 
-**GET** - /api/Bookings/**GetBooking/{bookingNumber}**    
+**GET - Get a booking with prebooked tables** - /api/bookings/booking/{bookingNumber}/detailed    
 parameter bookingNumber ex 1020240903080136  
 response body:  
 ```
@@ -276,7 +277,7 @@ response body:
 }  
 ```
 
-**GET** - /api/Bookings/**GetBookingWithoutTables/{bookingNumber}**    
+**GET - Get a booking without info on tables** - /api/bookings/booking/{bookingNumber}/simple    
 parameter bookingNumber ex 1020240903080136  
 response body:  
 ```
@@ -291,10 +292,10 @@ response body:
 ```
 
 ___
-**MEALS**  
+**MENU**  
 ___
 
-**POST** - /api/Meals/**AddMeal**  
+**POST - Add a meal** - /api/menu/add  
 request body:  
 ```
 {  
@@ -305,10 +306,10 @@ request body:
 }  
 ```
 
-**DELETE** - /api/Meals/**DeleteMeal/{mealId}**  
+**DELETE - Delete a meal by meal Id** - /api/menu/meal/{mealId}/delete  
 parameter mealId ex 1  
 
-**GET** - /api/Meals/**GetAllMeals**
+**GET - Get all meals** - /api/menu/meals
 response body:  
 ```
 [  
@@ -321,7 +322,7 @@ response body:
 ]  
 ```
 
-**GET** - /api/Meals/**GetMealById/{mealId}**  
+**GET - Get a meal by meal Id** - /api/menu/meal/{mealId}  
 parameter mealId ex 3  
 response body:  
 ```
@@ -333,7 +334,7 @@ response body:
 }  
 ```
 
-**PATCH** - /api/Meals/**UpdateMeal**  
+**PATCH - Update a meal** - /api/meals/meal/update  
 ```
 {  
   "id": 3,  

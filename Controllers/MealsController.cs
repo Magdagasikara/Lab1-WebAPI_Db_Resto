@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Lab1_WebAPI_Db_Resto.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/menu")]
     [ApiController]
     public class MealsController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             _mealServices = mealServices;
         }
 
-        [HttpPost("AddMeal")]
+        [HttpPost("meal/add")]
         public async Task<ActionResult> AddMeal(MealDto meal)
         {
             try
@@ -28,17 +28,17 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpDelete("DeleteMeal/{mealId}")]
+        [HttpDelete("meal/{mealId}/delete")]
         public async Task<ActionResult> DeleteMealById(int mealId)
         {
             try
             {
                 await _mealServices.DeleteMealByIdAsync(mealId);
-                return Ok();
+                return NoContent();
             }
             catch (KeyNotFoundException ex)
             {
@@ -46,11 +46,11 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpGet("GetAllMeals")]
+        [HttpGet("meals")]
         public async Task<ActionResult<IEnumerable<MealListVM>>> GetAllMeals()
         {
             try
@@ -59,11 +59,11 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpPost("GetMealById/{mealId}")] // ID shouldnt be exposed externally, I still need to find a good replacement
+        [HttpPost("meal/{mealId}")] // ID shouldnt be exposed externally, I still need to find a good replacement
         public async Task<ActionResult<MealListVM>> GetMealById(int mealId)
         {
             try
@@ -76,17 +76,17 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpPatch("UpdateMeal")]
+        [HttpPatch("meal/update")]
         public async Task<ActionResult> UpdateMeal(MealUpdateDto meal)
         {
             try
             {
                 await _mealServices.UpdateMealAsync(meal);
-                return Ok();
+                return NoContent();
             }
             catch (KeyNotFoundException ex)
             {
@@ -94,7 +94,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
     }

@@ -16,7 +16,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             _tableServices = tableServices;
         }
 
-        [HttpPost("AddTable")]
+        [HttpPost("table/add")]
         public async Task<ActionResult> AddTable(TableDto table)
         {
             try
@@ -27,18 +27,18 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             //catch (DbUpdateException){}
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
 
-        [HttpDelete("DeleteTable")]
+        [HttpDelete("table/delete")]
         public async Task<ActionResult> DeleteTableByTableNr(TableNumberDto table)
         {
             try
             {
                 await _tableServices.DeleteTableByTableNrAsync(table.TableNumber);
-                return Ok();
+                return NoContent();
             }
             catch (KeyNotFoundException ex)
             {
@@ -46,11 +46,11 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpGet("GetAllTables")]
+        // default route
         public async Task<ActionResult<IEnumerable<TableListVM>>> GetAllTables()
         {
             try
@@ -59,12 +59,12 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
 
-        [HttpGet("GetFreeTables")]
+        [HttpGet("available")]
         public async Task<ActionResult<IEnumerable<TableListVM>>> GetFreeTablesByTime(DateTime time, double reservationHours = 2)
         {
             try
@@ -73,10 +73,10 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
-        [HttpGet("GetFreePlaces")]
+        [HttpGet("places/available")]
         public async Task<ActionResult<int>> GetFreePlacesByTime(DateTime time, double reservationHours = 2)
         {
             try
@@ -90,11 +90,11 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpPost("GetTableByTableNr")]
+        [HttpPost("table")]
         public async Task<ActionResult<CustomerListVM>> GetTableByTableNr(TableNumberDto table)
         {
             try
@@ -107,19 +107,19 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
 
 
-        [HttpPatch("UpdateTable")]
+        [HttpPatch("table/update")]
         public async Task<ActionResult> UpdateTable(TableUpdateDto table)
         {
             try
             {
                 await _tableServices.UpdateTableAsync(table);
-                return Ok();
+                return NoContent();
             }
             catch (KeyNotFoundException ex)
             {
@@ -127,7 +127,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
     }

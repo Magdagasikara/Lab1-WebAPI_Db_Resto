@@ -16,7 +16,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             _bookingServices = bookingServices;
         }
 
-        [HttpPost("AddBooking")]
+        [HttpPost("booking/add")]
         public async Task<ActionResult> AddBooking(BookingDto booking)
         {
             try
@@ -30,25 +30,25 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpDelete("DeleteBooking/{bookingNumber}")]
+        [HttpDelete("booking/{bookingNumber}/delete")]
         public async Task<ActionResult> DeleteBooking(string bookingNumber)
         {
             try
             {
                 await _bookingServices.DeleteBookingByBookingNumberAsync(bookingNumber);
-                return Ok();
+                return NoContent();
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpGet("GetAllBookings")]
+        // default route
         public async Task<ActionResult<BookingListVM>> GetAllBookings()
         {
             try
@@ -57,12 +57,12 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
 
-        [HttpGet("GetBookingWithoutTables/{bookingNumber}")]
+        [HttpGet("booking/{bookingNumber}/simple")]
         public async Task<ActionResult<BookingListVM>> GetBookingByBookingNumber(string bookingNumber)
         {
             try
@@ -71,10 +71,10 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
-        [HttpGet("GetBooking/{bookingNumber}")]
+        [HttpGet("booking/{bookingNumber}/detailed")]
         public async Task<ActionResult<BookingWithTablesListVM>> GetBookingWithTablesByBookingNumber(string bookingNumber)
         {
             try
@@ -83,7 +83,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 

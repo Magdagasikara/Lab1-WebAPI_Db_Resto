@@ -16,7 +16,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             _customerServices = customerServices;
         }
 
-        [HttpPost("AddCustomer")]
+        [HttpPost("customer/add")]
         public async Task<ActionResult> AddCustomer(CustomerDto customer)
         {
             try
@@ -26,17 +26,17 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpDelete("DeleteCustomer")]
+        [HttpDelete("customer/delete")]
         public async Task<ActionResult> DeleteCustomerByEmail(CustomerEmailDto customer)
         {
             try
             {
                 await _customerServices.DeleteCustomerByEmailAsync(customer.Email);
-                return Ok();
+                return NoContent();
             }
             catch (KeyNotFoundException ex)
             {
@@ -44,11 +44,11 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpGet("GetAllCustomers")]
+        // default route
         public async Task<ActionResult<IEnumerable<CustomerListVM>>> GetAllCustomers()
         {
             try
@@ -57,11 +57,11 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpPost("GetCustomerByEmail")]
+        [HttpPost("customer")]
         public async Task<ActionResult<CustomerListVM>> GetCustomerByEmail(CustomerEmailDto customer)
         {
             try
@@ -74,20 +74,20 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
         // kanske ta bort helt
         //[HttpGet("GetCustomerById")]
 
-        [HttpPatch("UpdateCustomer")]
+        [HttpPatch("customer/update")]
         public async Task<ActionResult> UpdateCustomer(CustomerUpdateDto customer)
         {
             try
             {
                 await _customerServices.UpdateCustomerAsync(customer);
-                return Ok();
+                return NoContent();
             }
             catch (KeyNotFoundException ex)
             {
@@ -95,7 +95,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
