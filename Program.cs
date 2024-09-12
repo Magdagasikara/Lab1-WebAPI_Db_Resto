@@ -26,13 +26,15 @@ namespace Lab1_WebAPI_Db_Resto
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-            builder.Services.AddScoped<ICustomerServices, CustomerServices>();
+            builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<ITableRepository, TableRepository>();
-            builder.Services.AddScoped<ITableServices, TableServices>();
+            builder.Services.AddScoped<ITableServices, TableService>();
             builder.Services.AddScoped<IBookingRepository, BookingRepository>();
-            builder.Services.AddScoped<IBookingServices, BookingServices>();
+            builder.Services.AddScoped<IBookingService, BookingService>();
             builder.Services.AddScoped<IMealRepository, MealRepository>();
-            builder.Services.AddScoped<IMealServices, MealServices>();
+            builder.Services.AddScoped<IMealService, MealService>();
+            builder.Services.AddScoped<IMealCategoryRepository, MealCategoryRepository>();
+            builder.Services.AddScoped<IMealCategoryService, MealCategoryService>();
 
             var app = builder.Build();
 

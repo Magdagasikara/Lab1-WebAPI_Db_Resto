@@ -185,7 +185,7 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
                 {
                     return table;
                 }
-                throw new KeyNotFoundException($"No table with {tableNr}");
+                throw new KeyNotFoundException($"Table number {tableNr} not found");
             }
             catch (KeyNotFoundException)
             {

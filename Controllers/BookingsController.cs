@@ -1,4 +1,4 @@
-﻿using Lab1_WebAPI_Db_Resto.Models.DTOs;
+﻿using Lab1_WebAPI_Db_Resto.Models.DTOs.Booking;
 using Lab1_WebAPI_Db_Resto.Models.ViewModels;
 using Lab1_WebAPI_Db_Resto.Services.IServices;
 using Microsoft.AspNetCore.Http;
@@ -10,8 +10,8 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
     [ApiController]
     public class BookingsController : ControllerBase
     {
-        public readonly IBookingServices _bookingServices;
-        public BookingsController(IBookingServices bookingServices)
+        public readonly IBookingService _bookingServices;
+        public BookingsController(IBookingService bookingServices)
         {
             _bookingServices = bookingServices;
         }
@@ -49,6 +49,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         // default route
+        [HttpGet]
         public async Task<ActionResult<BookingListVM>> GetAllBookings()
         {
             try

@@ -67,7 +67,7 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
                 {
                     return customer;
                 }
-                throw new KeyNotFoundException($"No customer with {email}");
+                throw new KeyNotFoundException($"Customer with {email} not found");
             }
             catch (KeyNotFoundException)
             {

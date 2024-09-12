@@ -1,4 +1,6 @@
-﻿namespace Lab1_WebAPI_Db_Resto.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Lab1_WebAPI_Db_Resto.Models
 {
     public class Meal
     {
@@ -11,6 +13,8 @@
         // no virtuals, we want to load all info
         // to be done on time, I start without ingredients and category
         //public ICollection<MealIngredient>? MealIngredient { get; set; }
-        //public ICollection<MealCategory>? MealCategories { get; set; }
+        [ForeignKey("MealCategory")]
+        public int? FK_MealCategoryId { get; set; }
+        public MealCategory MealCategory { get; set; }
     }
 }

@@ -8,6 +8,6 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories.IRepositories
         Task<MealCategory> GetMealCategoryByIdAsync(int categoryId);
         Task AddMealCategoryAsync(MealCategory category);
         Task UpdateMealCategoryAsync(MealCategory category);
-        Task DeleteMealCategoryAsync(int categoryId);
+        Task DeleteMealCategoryByIdAsync(int categoryId);
     }
 }

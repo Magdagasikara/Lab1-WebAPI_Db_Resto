@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Lab1_WebAPI_Db_Resto.Models.DTOs.Table;
+using System.ComponentModel.DataAnnotations;
 
 namespace Lab1_WebAPI_Db_Resto.Models.ViewModels
 {
@@ -11,7 +12,7 @@ namespace Lab1_WebAPI_Db_Resto.Models.ViewModels
         public DateTime ReservationStart { get; set; }
         public DateTime ReservationEnd { get; set; }
 
-        public ICollection<TableListVM>? Tables { get; set; }
+        public ICollection<TableDto>? Tables { get; set; }
 
     }
 }

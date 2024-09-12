@@ -1,4 +1,4 @@
-﻿using Lab1_WebAPI_Db_Resto.Models.DTOs;
+﻿using Lab1_WebAPI_Db_Resto.Models.DTOs.Customer;
 using Lab1_WebAPI_Db_Resto.Models.ViewModels;
 using Lab1_WebAPI_Db_Resto.Services.IServices;
 using Microsoft.AspNetCore.Http;
@@ -10,8 +10,8 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly ICustomerServices _customerServices;
-        public CustomersController(ICustomerServices customerServices)
+        private readonly ICustomerService _customerServices;
+        public CustomersController(ICustomerService customerServices)
         {
             _customerServices = customerServices;
         }
@@ -49,7 +49,8 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         // default route
-        public async Task<ActionResult<IEnumerable<CustomerListVM>>> GetAllCustomers()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetAllCustomers()
         {
             try
             {
@@ -62,7 +63,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         [HttpPost("customer")]
-        public async Task<ActionResult<CustomerListVM>> GetCustomerByEmail(CustomerEmailDto customer)
+        public async Task<ActionResult<CustomerDto>> GetCustomerByEmail(CustomerEmailDto customer)
         {
             try
             {

@@ -1,28 +1,33 @@
 ﻿using AutoMapper;
 using Lab1_WebAPI_Db_Resto.Data.Repositories.IRepositories;
 using Lab1_WebAPI_Db_Resto.Models;
-using Lab1_WebAPI_Db_Resto.Models.DTOs;
+using Lab1_WebAPI_Db_Resto.Models.DTOs.Meal;
 using Lab1_WebAPI_Db_Resto.Models.ViewModels;
 using Lab1_WebAPI_Db_Resto.Services.IServices;
 
 namespace Lab1_WebAPI_Db_Resto.Services
 {
-    public class MealServices : IMealServices
+    public class MealService : IMealService
     {
         private readonly IMealRepository _mealRepo;
         private readonly IMapper _mapper;
 
-        public MealServices(IMealRepository mealRepo, IMapper mapper)
+        public MealService(IMealRepository mealRepo, IMapper mapper)
         {
             _mealRepo = mealRepo;
             _mapper = mapper;
         }
-        public async Task AddMealAsync(MealDto meal)
+        public async Task AddMealAsync(MealWithCategoryDto meal)
         {
             try
             {
                 var newMeal = _mapper.Map<Meal>(meal);
+                // !!!! Add check if category exists
                 await _mealRepo.AddMealAsync(newMeal);
+            }
+            catch (KeyNotFoundException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -46,13 +51,22 @@ namespace Lab1_WebAPI_Db_Resto.Services
             }
         }
 
-        public async Task<IEnumerable<MealListVM>> GetAllMealsAsync()
+        public async Task<IEnumerable<MealWithCategoryDto>> GetAllMealsAsync()
         {
             try
             {
                 var meals = await _mealRepo.GetAllMealsAsync();
-
-                return _mapper.Map<List<MealListVM>>(meals);
+                var mealDtos = new List<MealWithCategoryDto>();
+                foreach (var meal in meals)
+                {
+                    var mealDto = _mapper.Map<MealWithCategoryDto>(meal);
+                    if (meal.MealCategory is not null)
+                    {
+                        mealDto.FK_MealCategoryId = meal.MealCategory.Id;
+                    }
+                    mealDtos.Add(mealDto);
+                }
+                return mealDtos;
             }
             catch (Exception ex)
             {
@@ -60,12 +74,16 @@ namespace Lab1_WebAPI_Db_Resto.Services
             }
         }
 
-        public async Task<MealListVM> GetMealByIdAsync(int mealId)
+        public async Task<MealWithCategoryDto> GetMealByIdAsync(int mealId)
         {
             try
             {
                 var meal = await _mealRepo.GetMealByIdAsync(mealId);
-                return _mapper.Map<MealListVM>(meal);
+                return _mapper.Map<MealWithCategoryDto>(meal);
+            }
+            catch (KeyNotFoundException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -78,6 +96,7 @@ namespace Lab1_WebAPI_Db_Resto.Services
             try
             {
                 var updatedMeal = _mapper.Map<Meal>(meal);
+                // !!!! Add check if category exists
                 await _mealRepo.UpdateMealAsync(updatedMeal);
             }
             catch (KeyNotFoundException)

@@ -1,4 +1,5 @@
-﻿using Lab1_WebAPI_Db_Resto.Models.DTOs;
+﻿using Lab1_WebAPI_Db_Resto.Models.DTOs.Customer;
+using Lab1_WebAPI_Db_Resto.Models.DTOs.Table;
 using Lab1_WebAPI_Db_Resto.Models.ViewModels;
 using Lab1_WebAPI_Db_Resto.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
@@ -51,7 +52,8 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         // default route
-        public async Task<ActionResult<IEnumerable<TableListVM>>> GetAllTables()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<TableDto>>> GetAllTables()
         {
             try
             {
@@ -65,7 +67,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
 
 
         [HttpGet("available")]
-        public async Task<ActionResult<IEnumerable<TableListVM>>> GetFreeTablesByTime(DateTime time, double reservationHours = 2)
+        public async Task<ActionResult<IEnumerable<TableDto>>> GetFreeTablesByTime(DateTime time, double reservationHours = 2)
         {
             try
             {
@@ -95,7 +97,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         [HttpPost("table")]
-        public async Task<ActionResult<CustomerListVM>> GetTableByTableNr(TableNumberDto table)
+        public async Task<ActionResult<CustomerDto>> GetTableByTableNr(TableNumberDto table)
         {
             try
             {

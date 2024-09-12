@@ -47,7 +47,9 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
         {
             try
             {
-                return await _context.Meals.ToListAsync();
+                return await _context.Meals
+                    .Include(m => m.MealCategory)
+                    .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -59,16 +61,40 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
         {
             try
             {
-                var meal = await _context.Meals.FindAsync(mealId);
+                var meal = await _context
+                    .Meals
+                    .Include(m => m.MealCategory)
+                    .SingleOrDefaultAsync(m => m.Id == mealId);
+                //.FindAsync(mealId);
                 if (meal != null)
                 {
                     return meal;
                 }
-                throw new KeyNotFoundException($"MealId {mealId} does not return a customer");
+                throw new KeyNotFoundException($"Meal with id {mealId} not found");
+            }
+            catch (KeyNotFoundException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
                 throw new Exception("Error when getting a meals", ex);
+            }
+        }
+
+        public async Task<IEnumerable<Meal>> GetMealsByCategoryAsync(MealCategory category)
+        {
+            // meals should always follow when getting a category
+
+            try
+            {
+                return await _context.Meals
+                    .Where(mc => mc.MealCategory == category)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error getting a list of meals", ex);
             }
         }
 
@@ -85,7 +111,12 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
                 meal.Description = updatedMeal.Description;
                 meal.Price = updatedMeal.Price;
                 meal.IsAvailable = updatedMeal.IsAvailable;
+                meal.FK_MealCategoryId = updatedMeal.FK_MealCategoryId;
                 await _context.SaveChangesAsync();
+            }
+            catch (KeyNotFoundException)
+            {
+                throw;
             }
             catch (DbUpdateConcurrencyException)
             {

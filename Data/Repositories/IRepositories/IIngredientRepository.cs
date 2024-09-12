@@ -8,6 +8,6 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories.IRepositories
         Task<Ingredient> GetIngredientByIdAsync(int ingredientId);
         Task AddIngredientAsync(Ingredient ingredient);
         Task UpdateIngredientAsync(Ingredient ingredient);
-        Task DeleteIngredientAsync(int ingredientId);
+        Task DeleteIngredientByIdAsync(int ingredientId);
     }
 }

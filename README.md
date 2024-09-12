@@ -3,7 +3,7 @@
 Initial Db-plan:  
 ![text](https://github.com/Magdagasikara/Lab1-WebAPI_Db_Resto/blob/master/ER.png)
 Changes compared with the scheme: "Table per hour" has become "TableBooking" and I didn't have time yet to implement Meal categories and ingredients as they weren't part of our assignment.
-
+One meal will only belong to one category.
   
 ___
 **CUSTOMERS**  
@@ -346,12 +346,19 @@ response body:
 ```
 // need to update to get 404 when requesting a non-existant Id  
 
+___
+**MENU**  
+___
+
+MEAL CATEGORY DELETE - removes the category, not meals within it
+
 
 todo:
 - only half-hours possible in booking system  
 - default checking for available tables NOW  
 - ViewModels - other names to be shown?  
 - status codes, status codes, status codes...
+- !!!! mealCategory delete raderar tillhörande rätter!!!
 
 kolla igen  
 - IActionResult vs ActionResult  

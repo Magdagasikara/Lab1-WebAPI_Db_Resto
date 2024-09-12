@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using Lab1_WebAPI_Db_Resto.Data.Repositories.IRepositories;
 using Lab1_WebAPI_Db_Resto.Models;
-using Lab1_WebAPI_Db_Resto.Models.DTOs;
+using Lab1_WebAPI_Db_Resto.Models.DTOs.Booking;
+using Lab1_WebAPI_Db_Resto.Models.DTOs.Table;
 using Lab1_WebAPI_Db_Resto.Models.ViewModels;
 using Lab1_WebAPI_Db_Resto.Services.IServices;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -10,13 +11,13 @@ using System.Collections.Generic;
 
 namespace Lab1_WebAPI_Db_Resto.Services
 {
-    public class BookingServices : IBookingServices
+    public class BookingService : IBookingService
     {
         private readonly IBookingRepository _bookingRepo;
         private readonly ITableRepository _tableRepo;
         private readonly ICustomerRepository _customerRepo;
         private readonly IMapper _mapper;
-        public BookingServices(IBookingRepository bookingRepo, ITableRepository tableRepo, ICustomerRepository customerRepo, IMapper mapper)
+        public BookingService(IBookingRepository bookingRepo, ITableRepository tableRepo, ICustomerRepository customerRepo, IMapper mapper)
         {
             _bookingRepo = bookingRepo;
             _tableRepo = tableRepo;
@@ -105,10 +106,10 @@ namespace Lab1_WebAPI_Db_Resto.Services
                 {
                     var getBooking = _mapper.Map<BookingWithTablesListVM>(booking);
                     getBooking.Email = booking.Customer.Email;
-                    getBooking.Tables = new List<TableListVM>();
+                    getBooking.Tables = new List<TableDto>();
                     foreach (var tableBooking in booking.TableBookings)
                     {
-                        var tablevm=_mapper.Map<TableListVM>(tableBooking.Table);
+                        var tablevm=_mapper.Map<TableDto>(tableBooking.Table);
                         getBooking.Tables.Add(tablevm);
                     }
                     bookingsWithTables.Add(getBooking);
@@ -184,10 +185,10 @@ namespace Lab1_WebAPI_Db_Resto.Services
                 var booking = await _bookingRepo.GetBookingByBookingNumberAsync(bookingNr);
                 var getBooking = _mapper.Map<BookingWithTablesListVM>(booking);
                 getBooking.Email = booking.Customer.Email;
-                getBooking.Tables = new List<TableListVM>();
+                getBooking.Tables = new List<TableDto>();
                 foreach (var tableBooking in booking.TableBookings)
                 {
-                    var tablevm = _mapper.Map<TableListVM>(tableBooking.Table);
+                    var tablevm = _mapper.Map<TableDto>(tableBooking.Table);
                     getBooking.Tables.Add(tablevm);
                 }
                 return getBooking;

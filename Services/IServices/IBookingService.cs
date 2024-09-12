@@ -1,10 +1,10 @@
 ﻿using Lab1_WebAPI_Db_Resto.Models;
-using Lab1_WebAPI_Db_Resto.Models.DTOs;
+using Lab1_WebAPI_Db_Resto.Models.DTOs.Booking;
 using Lab1_WebAPI_Db_Resto.Models.ViewModels;
 
 namespace Lab1_WebAPI_Db_Resto.Services.IServices
 {
-    public interface IBookingServices
+    public interface IBookingService
     {
         Task<IEnumerable<BookingWithTablesListVM>> GetAllBookingsAsync();
         Task<IEnumerable<BookingWithTablesListVM>> GetActiveBookingsAsync(DateTime dateTime);

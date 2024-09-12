@@ -121,7 +121,7 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
                 {
                     return booking;
                 }
-                throw new KeyNotFoundException($"Booking number not found.");
+                throw new KeyNotFoundException($"Booking number {bookingNr} not found.");
             }
             catch (KeyNotFoundException)
             {

@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
 using Lab1_WebAPI_Db_Resto.Data.Repositories.IRepositories;
 using Lab1_WebAPI_Db_Resto.Models;
-using Lab1_WebAPI_Db_Resto.Models.DTOs;
+using Lab1_WebAPI_Db_Resto.Models.DTOs.Table;
 using Lab1_WebAPI_Db_Resto.Models.ViewModels;
 using Lab1_WebAPI_Db_Resto.Services.IServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lab1_WebAPI_Db_Resto.Services
 {
-    public class TableServices : ITableServices
+    public class TableService : ITableServices
     {
         private readonly ITableRepository _tableRepo;
         private readonly IMapper _mapper;
 
-        public TableServices(ITableRepository tableRepo, IMapper mapper)
+        public TableService(ITableRepository tableRepo, IMapper mapper)
         {
             _tableRepo = tableRepo;
             _mapper = mapper;
@@ -51,13 +51,13 @@ namespace Lab1_WebAPI_Db_Resto.Services
             }
         }
 
-        public async Task<IEnumerable<TableListVM>> GetAllTablesAsync()
+        public async Task<IEnumerable<TableDto>> GetAllTablesAsync()
         {
             try
             {
                 var tables = await _tableRepo.GetAllTablesAsync();
 
-                return _mapper.Map<List<TableListVM>>(tables);
+                return _mapper.Map<List<TableDto>>(tables);
             }
             catch (Exception ex)
             {
@@ -65,13 +65,13 @@ namespace Lab1_WebAPI_Db_Resto.Services
             }
         }
 
-        public async Task<IEnumerable<TableListVM>> GetFreeTablesByTimeAsync(DateTime time, double reservationHours = 2)
+        public async Task<IEnumerable<TableDto>> GetFreeTablesByTimeAsync(DateTime time, double reservationHours = 2)
         {
             try
             {
                 var tables = await _tableRepo.GetFreeTablesByTimeAsync(time, reservationHours);
 
-                return _mapper.Map<List<TableListVM>>(tables);
+                return _mapper.Map<List<TableDto>>(tables);
             }
             catch (Exception ex)
             {
@@ -79,12 +79,12 @@ namespace Lab1_WebAPI_Db_Resto.Services
             }
         }
 
-        public async Task<TableListVM> GetTableByTableNrAsync(int tableNr)
+        public async Task<TableDto> GetTableByTableNrAsync(int tableNr)
         {
             try
             {
                 var table = await _tableRepo.GetTableByTableNrAsync(tableNr);
-                return _mapper.Map<TableListVM>(table);
+                return _mapper.Map<TableDto>(table);
             }
             catch (KeyNotFoundException)
             {

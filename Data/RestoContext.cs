@@ -72,7 +72,8 @@ namespace Lab1_WebAPI_Db_Resto.Data
                     Name = "Tofu med kroppkakor",
                     Description = "Det är bara svampsås som saknas",
                     Price = 100,
-                    IsAvailable = false
+                    IsAvailable = false,
+                    FK_MealCategoryId = 2
                 },
                 new Meal
                 {
@@ -80,7 +81,8 @@ namespace Lab1_WebAPI_Db_Resto.Data
                     Name = "Pasta aglio e olio",
                     Description = "Nom nom tres bienos!",
                     Price = 89,
-                    IsAvailable = true
+                    IsAvailable = true,
+                    FK_MealCategoryId = 2
                 }
                 );
             //modelBuilder.Entity<MealIngredient>().HasData(
@@ -90,12 +92,10 @@ namespace Lab1_WebAPI_Db_Resto.Data
             //    new MealIngredient { Id = 4, FK_MealId = 2, FK_IngredientId = 5 }
             //    );
             modelBuilder.Entity<MealCategory>().HasData(
-                new MealCategory { Id = 1, Name = "Starter" },
-                new MealCategory { Id = 2, Name = "Dinner" },
-                new MealCategory { Id = 3, Name = "Dessert" },
-                new MealCategory { Id = 4, Name = "Snacks" },
-                new MealCategory { Id = 5, Name = "Drinks non-alco" },
-                new MealCategory { Id = 6, Name = "Beer" }
+                new MealCategory { Id = 1, Name = "Starter", CategoryOrder = 1 },
+                new MealCategory { Id = 2, Name = "Dinner", CategoryOrder = 2 },
+                new MealCategory { Id = 3, Name = "Dessert", CategoryOrder = 3 },
+                new MealCategory { Id = 4, Name = "Snacks", CategoryOrder = 4 }
                 );
 
         }

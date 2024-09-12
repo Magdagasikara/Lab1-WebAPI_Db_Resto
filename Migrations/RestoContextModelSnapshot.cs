@@ -63,21 +63,21 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                         {
                             Id = 1,
                             AmountOfGuests = 4,
-                            BookingNumber = "120240830",
+                            BookingNumber = "120240830092301",
                             FK_CustomerId = 2,
-                            ReservationEnd = new DateTime(2024, 9, 2, 20, 12, 11, 650, DateTimeKind.Local).AddTicks(3619),
-                            ReservationStart = new DateTime(2024, 9, 2, 18, 12, 11, 650, DateTimeKind.Local).AddTicks(3554),
-                            TimeStamp = new DateTime(2024, 9, 2, 18, 12, 11, 650, DateTimeKind.Local).AddTicks(3624)
+                            ReservationEnd = new DateTime(2024, 9, 12, 11, 49, 4, 235, DateTimeKind.Local).AddTicks(6396),
+                            ReservationStart = new DateTime(2024, 9, 12, 9, 49, 4, 235, DateTimeKind.Local).AddTicks(6342),
+                            TimeStamp = new DateTime(2024, 9, 12, 9, 49, 4, 235, DateTimeKind.Local).AddTicks(6403)
                         },
                         new
                         {
                             Id = 2,
                             AmountOfGuests = 6,
-                            BookingNumber = "220240830",
+                            BookingNumber = "220240830081911",
                             FK_CustomerId = 2,
-                            ReservationEnd = new DateTime(2024, 9, 2, 20, 12, 11, 650, DateTimeKind.Local).AddTicks(3634),
-                            ReservationStart = new DateTime(2024, 9, 2, 18, 12, 11, 650, DateTimeKind.Local).AddTicks(3632),
-                            TimeStamp = new DateTime(2024, 9, 2, 18, 12, 11, 650, DateTimeKind.Local).AddTicks(3636)
+                            ReservationEnd = new DateTime(2024, 9, 12, 11, 49, 4, 235, DateTimeKind.Local).AddTicks(6409),
+                            ReservationStart = new DateTime(2024, 9, 12, 9, 49, 4, 235, DateTimeKind.Local).AddTicks(6407),
+                            TimeStamp = new DateTime(2024, 9, 12, 9, 49, 4, 235, DateTimeKind.Local).AddTicks(6412)
                         });
                 });
 
@@ -196,6 +196,9 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("FK_MealCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
 
@@ -208,6 +211,8 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FK_MealCategoryId");
+
                     b.ToTable("Meals");
 
                     b.HasData(
@@ -215,6 +220,7 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                         {
                             Id = 1,
                             Description = "Det är bara svampsås som saknas",
+                            FK_MealCategoryId = 2,
                             IsAvailable = false,
                             Name = "Tofu med kroppkakor",
                             Price = 100
@@ -223,6 +229,7 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                         {
                             Id = 2,
                             Description = "Nom nom tres bienos!",
+                            FK_MealCategoryId = 2,
                             IsAvailable = true,
                             Name = "Pasta aglio e olio",
                             Price = 89
@@ -237,6 +244,9 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CategoryOrder")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -249,32 +259,26 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                         new
                         {
                             Id = 1,
+                            CategoryOrder = 1,
                             Name = "Starter"
                         },
                         new
                         {
                             Id = 2,
+                            CategoryOrder = 2,
                             Name = "Dinner"
                         },
                         new
                         {
                             Id = 3,
+                            CategoryOrder = 3,
                             Name = "Dessert"
                         },
                         new
                         {
                             Id = 4,
+                            CategoryOrder = 4,
                             Name = "Snacks"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Drinks non-alco"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Beer"
                         });
                 });
 
@@ -398,6 +402,15 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
                     b.Navigation("Customer");
                 });
 
+            modelBuilder.Entity("Lab1_WebAPI_Db_Resto.Models.Meal", b =>
+                {
+                    b.HasOne("Lab1_WebAPI_Db_Resto.Models.MealCategory", "MealCategory")
+                        .WithMany("Meals")
+                        .HasForeignKey("FK_MealCategoryId");
+
+                    b.Navigation("MealCategory");
+                });
+
             modelBuilder.Entity("Lab1_WebAPI_Db_Resto.Models.MealIngredient", b =>
                 {
                     b.HasOne("Lab1_WebAPI_Db_Resto.Models.Ingredient", null)
@@ -437,6 +450,11 @@ namespace Lab1_WebAPI_Db_Resto.Migrations
             modelBuilder.Entity("Lab1_WebAPI_Db_Resto.Models.Ingredient", b =>
                 {
                     b.Navigation("MealIngredient");
+                });
+
+            modelBuilder.Entity("Lab1_WebAPI_Db_Resto.Models.MealCategory", b =>
+                {
+                    b.Navigation("Meals");
                 });
 
             modelBuilder.Entity("Lab1_WebAPI_Db_Resto.Models.Table", b =>

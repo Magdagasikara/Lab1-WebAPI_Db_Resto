@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Lab1_WebAPI_Db_Resto.Models.DTOs
+namespace Lab1_WebAPI_Db_Resto.Models.DTOs.Table
 {
     public class TableNumberDto
     {
