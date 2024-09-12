@@ -6,5 +6,6 @@ namespace Lab1_WebAPI_Db_Resto.Models.DTOs.MealCategory
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int CategoryOrder { get; set; }
     }
 }

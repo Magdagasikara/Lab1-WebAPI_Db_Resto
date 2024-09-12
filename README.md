@@ -292,21 +292,25 @@ response body:
 ```
 
 ___
-**MENU**  
+**MENU** - MEALS and MEAL CATEGORIES  
 ___
 
-**POST - Add a meal** - /api/menu/add  
+MEALS  
+
+**POST - Add a meal** - /api/menu/meals/meal/add  
 request body:  
 ```
 {  
   "name": "Bigos",  
   "description": "Polsk nationalrätt!",  
   "isAvailable": false,  
-  "price": 1000  
+  "price": 1000,  
+  "fK_MealCategoryId": 2  
 }  
 ```
+fk_MealCategoryId is optional, you can add meals without placing them in categories directly.  
 
-**DELETE - Delete a meal by meal Id** - /api/menu/meal/{mealId}/delete  
+**DELETE - Delete a meal by meal Id** - /api/menu/meals/meal/{mealId}/delete  
 parameter mealId ex 1  
 
 **GET - Get all meals** - /api/menu/meals
@@ -317,12 +321,13 @@ response body:
     "name": "Bigos",  
     "description": "Polsk nationalrätt!",  
     "isAvailable": false,  
-    "price": 1000  
+    "price": 1000,  
+    "fK_MealCategoryId": 2  
   }  
 ]  
 ```
 
-**GET - Get a meal by meal Id** - /api/menu/meal/{mealId}  
+**GET - Get a meal by meal Id** - /api/menu/meals/meal/{mealId}  
 parameter mealId ex 3  
 response body:  
 ```
@@ -330,35 +335,92 @@ response body:
   "name": "Bigos",   
   "description": "Polsk nationalrätt!",  
   "isAvailable": true,  
-  "price": 666  
+  "price": 666,  
+  "fK_MealCategoryId": 2  
 }  
 ```
 
-**PATCH - Update a meal** - /api/meals/meal/update  
+**PATCH - Update a meal** - /api/menu/meals/meal/update  
 ```
 {  
   "id": 3,  
   "name": "Bigos",   
   "description": "Polsk nationalrätt fast inte den godaste - eller?",  
   "isAvailable": false,  
-  "price": 999  
+  "price": 999,  
+  "fK_MealCategoryId": 1  
 }  
 ```
-// need to update to get 404 when requesting a non-existant Id  
+404 when requesting a non-existant Id  
 
-___
-**MENU**  
-___
+MEAL CATEGORIES  
 
-MEAL CATEGORY DELETE - removes the category, not meals within it
+**POST - Add a meal category** - /api/menu/categories/category/add  
+request body:  
+```
+{  
+  "name": "Bigos",  
+  "categoryOrder": 2
+}  
+```
+
+**DELETE - Delete a meal category by Id** - /api/menu/categories/category/{categoryId}/delete  
+parameter categoryId ex 1  
+This method deletes the meal category, not the meals within it! Meals loose their connection and can be updated to belong to another meal category.  
+
+**GET - Get all meal categories** - /api/menu/categories
+response body:  
+```
+[  
+  {  
+    "name": "Dinner",  
+    "categoryOrder": 2  
+  },  
+  {  
+    "name": "Dessert",  
+    "categoryOrder": 3  
+  },  
+  {  
+    "name": "Snacks",  
+    "categoryOrder": 1  
+  }  
+]  
+```
+
+**GET - Get a meal category by Id** - /api/menu/categories/category/{categoryId}  
+parameter categoryId ex 3  
+response body:  
+```
+{  
+  "name": "Dinner",  
+  "meals": [  
+    {  
+      "name": "Pasta aglio e olio",  
+      "description": "Nom nom tres bienos!",  
+      "isAvailable": true,  
+      "price": 89  
+    }  
+  ]  
+}  
+```
+
+**PATCH - Update a meal category** - /api/menu/categories/category/update  
+```
+{
+  "id": 3,
+  "name": "Snacks",
+  "categoryOrder": 4
+}  
+```
+404 when requesting a non-existant Id  
 
 
 todo:
 - only half-hours possible in booking system  
 - default checking for available tables NOW  
-- ViewModels - other names to be shown?  
+- ViewModels - last two ones to be removed  
 - status codes, status codes, status codes...
-- !!!! mealCategory delete raderar tillhörande rätter!!!
+- remember to handle meals without category on the website
 
 kolla igen  
 - IActionResult vs ActionResult  
