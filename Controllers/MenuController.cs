@@ -21,6 +21,26 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             _mealCategoryServices = mealCategoryServices;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<MealCategoryWithMealsDto>>> GetCurrentMenu()
+        {
+            try
+            {
+                var menu = await _mealCategoryServices.GetAllMealCategoriesWithMealsAsync();
+            
+                var menuCurrent = menu.Select(mc => new MealCategoryWithMealsDto
+                {
+                    Name = mc.Name,
+                    Meals = mc.Meals?.Where(m => m.IsAvailable).ToList()
+                });
+                return Ok(menuCurrent);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("meals/meal/add")]
         public async Task<ActionResult> AddMeal(MealWithCategoryDto meal)
         {
@@ -144,6 +164,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpGet("categories/category/{categoryId}")] // ID shouldnt be exposed externally, I still need to find a good replacement
         public async Task<ActionResult<MealCategoryWithMealsDto>> GetMealCategoryById(int categoryId)
         {

@@ -72,7 +72,23 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
                 throw new Exception("Error getting a list of meal categories", ex);
             }
         }
-        
+
+        public async Task<IEnumerable<MealCategory>> GetAllMealCategoriesWithMealsAsync()
+        {
+            try
+            {
+                return await _context
+                    .MealCategories
+                    .Include(mc => mc.Meals)
+                    .OrderBy(mc => mc.CategoryOrder)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error getting a list of meal categories", ex);
+            }
+        }
+
         public async Task<MealCategory> GetMealCategoryByIdAsync(int categoryId)
         {
             try

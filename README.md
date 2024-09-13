@@ -295,6 +295,32 @@ ___
 **MENU** - MEALS and MEAL CATEGORIES  
 ___
 
+**GET - Get current menu** - /api/menu  
+request body:  
+```
+[  
+  {  
+    "name": "Dinner",  
+    "meals": [  
+      {  
+        "name": "Pasta aglio e olio",  
+        "description": "Nom nom tres bienos!",  
+        "isAvailable": true,  
+        "price": 89  
+      }  
+    ]  
+  },  
+  {  
+    "name": "Dessert",  
+    "meals": []  
+  },  
+  {  
+    "name": "Snacks",  
+    "meals": []  
+  }  
+]  
+```
+
 MEALS  
 
 **POST - Add a meal** - /api/menu/meals/meal/add  

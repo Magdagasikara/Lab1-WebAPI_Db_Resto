@@ -59,6 +59,20 @@ namespace Lab1_WebAPI_Db_Resto.Services
             }
         }
 
+        public async Task<IEnumerable<MealCategoryWithMealsDto>> GetAllMealCategoriesWithMealsAsync()
+        {
+            try
+            {
+                var mealCategories = await _mealCategoryRepo.GetAllMealCategoriesWithMealsAsync();
+
+                return _mapper.Map<List<MealCategoryWithMealsDto>>(mealCategories);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error getting meal categories in service", ex);
+            }
+        }
+
         public async Task<MealCategoryWithMealsDto> GetMealCategoryByIdAsync(int categoryId)
         {
             try
