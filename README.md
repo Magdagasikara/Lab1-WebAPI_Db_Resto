@@ -447,6 +447,7 @@ todo:
 - ViewModels - last two ones to be removed  
 - status codes, status codes, status codes...
 - remember to handle meals without category on the website
+- kkan MealUpdateDto tas bort nu och ersättas av MealWithCategoryDto?
 
 kolla igen  
 - IActionResult vs ActionResult  

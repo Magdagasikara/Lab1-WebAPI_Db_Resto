@@ -63,6 +63,7 @@ namespace Lab1_WebAPI_Db_Resto.Services
                     if (meal.MealCategory is not null)
                     {
                         mealDto.FK_MealCategoryId = meal.MealCategory.Id;
+                        mealDto.MealCategoryName = meal.MealCategory.Name;
                     }
                     mealDtos.Add(mealDto);
                 }
