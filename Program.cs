@@ -22,7 +22,7 @@ namespace Lab1_WebAPI_Db_Resto
             // add Cors to communicate with frontend
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowSpecificOrigin",
+                options.AddPolicy("AllowLocalFrontend",
                     builder =>
                     {
                         builder.WithOrigins("https://localhost:7170")
@@ -49,7 +49,7 @@ namespace Lab1_WebAPI_Db_Resto
 
             var app = builder.Build();
 
-            app.UseCors("AllowSpecificOrigin");
+            app.UseCors("AllowLocalFrontend");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
