@@ -19,12 +19,23 @@ namespace Lab1_WebAPI_Db_Resto
             });
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-            // Add services to the container.
+            // add Cors to communicate with frontend
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder =>
+                    {
+                        builder.WithOrigins("https://localhost:7170")
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
 
+            // Add services to the container.
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
             builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<ITableRepository, TableRepository>();
@@ -37,6 +48,8 @@ namespace Lab1_WebAPI_Db_Resto
             builder.Services.AddScoped<IMealCategoryService, MealCategoryService>();
 
             var app = builder.Build();
+
+            app.UseCors("AllowSpecificOrigin");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
