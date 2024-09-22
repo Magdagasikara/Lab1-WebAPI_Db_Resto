@@ -5,21 +5,12 @@ namespace Lab1_WebAPI_Db_Resto.Models.DTOs.Booking
 {
     public class BookingWithTablesDto
     {
-
         // not yet implemented
-        [Required]
         public string BookingNumber { get; set; }
-        [Required]
         public DateTime TimeStamp { get; set; }
-        [Required]
         public int AmountOfGuests { get; set; }
-        [Required]
         public DateTime ReservationStart { get; set; }
-        [Required]
-        public TimeSpan ReservationDuration { get; set; }
-        [Required]
-        [EmailAddress(ErrorMessage = "Please fill in correct Email-address")]
-        [StringLength(100, MinimumLength = 6)]
+        public double ReservationDurationInHours { get; set; }
         public string Email { get; set; }
     }
 }

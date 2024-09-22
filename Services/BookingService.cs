@@ -63,13 +63,13 @@ namespace Lab1_WebAPI_Db_Resto.Services
             }
         }
 
-        public async Task<IEnumerable<BookingWithTablesListVM>> GetActiveBookingsAsync(DateTime dateTime)
+        public async Task<IEnumerable<BookingWithTablesEndTimeDto>> GetActiveBookingsAsync(DateTime dateTime)
         {
             try
             {
                 var bookings = await _bookingRepo.GetActiveBookingsAsync(dateTime);
 
-                return _mapper.Map<List<BookingWithTablesListVM>>(bookings);
+                return _mapper.Map<List<BookingWithTablesEndTimeDto>>(bookings);
                 // komplettera med tables eller kommer de med ??????
                 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             }
@@ -96,15 +96,15 @@ namespace Lab1_WebAPI_Db_Resto.Services
             }
         }
 
-        public async Task<IEnumerable<BookingWithTablesListVM>> GetAllBookingsAsync()
+        public async Task<IEnumerable<BookingWithTablesEndTimeDto>> GetAllBookingsAsync()
         {
             try
             {
                 var bookings = await _bookingRepo.GetAllBookingsAsync();
-                var bookingsWithTables = new List<BookingWithTablesListVM>();
+                var bookingsWithTables = new List<BookingWithTablesEndTimeDto>();
                 foreach (Booking booking in bookings)
                 {
-                    var getBooking = _mapper.Map<BookingWithTablesListVM>(booking);
+                    var getBooking = _mapper.Map<BookingWithTablesEndTimeDto>(booking);
                     getBooking.Email = booking.Customer.Email;
                     getBooking.Tables = new List<TableDto>();
                     foreach (var tableBooking in booking.TableBookings)
@@ -163,12 +163,12 @@ namespace Lab1_WebAPI_Db_Resto.Services
             }
         }
 
-        public async Task<IEnumerable<BookingWithTablesListVM>> GetBookingsByDateAsync(DateOnly date)
+        public async Task<IEnumerable<BookingWithTablesEndTimeDto>> GetBookingsByDateAsync(DateOnly date)
         {
             try
             {
                 var bookings = await _bookingRepo.GetBookingsByDateAsync(date);
-                return _mapper.Map<List<BookingWithTablesListVM>>(bookings);
+                return _mapper.Map<List<BookingWithTablesEndTimeDto>>(bookings);
                 // komplettera med tables eller kommer de med ??????
                 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             }
@@ -178,12 +178,12 @@ namespace Lab1_WebAPI_Db_Resto.Services
             }
         }
 
-        public async Task<BookingWithTablesListVM> GetBookingWithTablesByBookingNumberAsync(string bookingNr)
+        public async Task<BookingWithTablesEndTimeDto> GetBookingWithTablesByBookingNumberAsync(string bookingNr)
         {
             try
             {
                 var booking = await _bookingRepo.GetBookingByBookingNumberAsync(bookingNr);
-                var getBooking = _mapper.Map<BookingWithTablesListVM>(booking);
+                var getBooking = _mapper.Map<BookingWithTablesEndTimeDto>(booking);
                 getBooking.Email = booking.Customer.Email;
                 getBooking.Tables = new List<TableDto>();
                 foreach (var tableBooking in booking.TableBookings)

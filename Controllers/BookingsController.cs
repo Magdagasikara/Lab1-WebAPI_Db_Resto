@@ -50,7 +50,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
 
         // default route
         [HttpGet]
-        public async Task<ActionResult<BookingListVM>> GetAllBookings()
+        public async Task<ActionResult<BookingWithTablesEndTimeDto>> GetAllBookings()
         {
             try
             {
@@ -76,7 +76,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
         }
         [HttpGet("booking/{bookingNumber}/detailed")]
-        public async Task<ActionResult<BookingWithTablesListVM>> GetBookingWithTablesByBookingNumber(string bookingNumber)
+        public async Task<ActionResult<BookingWithTablesEndTimeDto>> GetBookingWithTablesByBookingNumber(string bookingNumber)
         {
             try
             {

@@ -106,6 +106,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         [HttpPatch("meals/meal/update")]
         public async Task<ActionResult> UpdateMeal(MealUpdateDto meal)
         {
+            Console.WriteLine("halo!!");
             try
             {
                 await _mealServices.UpdateMealAsync(meal);

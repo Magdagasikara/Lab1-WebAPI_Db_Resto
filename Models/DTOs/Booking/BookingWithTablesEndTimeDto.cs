@@ -1,9 +1,8 @@
 ﻿using Lab1_WebAPI_Db_Resto.Models.DTOs.Table;
-using System.ComponentModel.DataAnnotations;
 
-namespace Lab1_WebAPI_Db_Resto.Models.ViewModels
+namespace Lab1_WebAPI_Db_Resto.Models.DTOs.Booking
 {
-    public class BookingWithTablesListVM
+    public class BookingWithTablesEndTimeDto
     {
         public string BookingNumber { get; set; }
         public string Email { get; set; }
@@ -13,6 +12,5 @@ namespace Lab1_WebAPI_Db_Resto.Models.ViewModels
         public DateTime ReservationEnd { get; set; }
 
         public ICollection<TableDto>? Tables { get; set; }
-
     }
 }
