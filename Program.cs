@@ -26,8 +26,11 @@ namespace Lab1_WebAPI_Db_Resto
                     builder =>
                     {
                         builder.WithOrigins("https://localhost:7170")
-                               .AllowAnyHeader()
-                               .AllowAnyMethod();
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                        builder.WithOrigins("http://localhost:5173")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
                     });
             });
 
