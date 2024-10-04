@@ -6,6 +6,7 @@ using Lab1_WebAPI_Db_Resto.Models.DTOs.Customer;
 using Lab1_WebAPI_Db_Resto.Models.DTOs.MealCategory;
 using Lab1_WebAPI_Db_Resto.Models.DTOs.Meal;
 using Lab1_WebAPI_Db_Resto.Models.DTOs.Table;
+using Lab1_WebAPI_Db_Resto.Models.DTOs.Account;
 
 namespace Lab1_WebAPI_Db_Resto.Services
 {
@@ -37,6 +38,9 @@ namespace Lab1_WebAPI_Db_Resto.Services
             CreateMap<MealCategoryUpdateDto, MealCategory>();
             CreateMap<MealCategory, MealCategoryDto>();
             CreateMap<MealCategory, MealCategoryWithMealsDto>();
+
+            CreateMap<AccountRegisterDto, Account>();
+            CreateMap<Account, AccountRegisterDto>();
         }
     }
 }

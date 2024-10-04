@@ -441,6 +441,14 @@ response body:
 404 when requesting a non-existant Id  
 
 
+___
+**ACCOUNTS**  
+___
+
+uppdatera listan med login register etc!
+
+
+
 todo:
 - only half-hours possible in booking system  
 - default checking for available tables NOW  

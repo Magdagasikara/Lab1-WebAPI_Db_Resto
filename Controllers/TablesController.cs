@@ -2,6 +2,7 @@
 using Lab1_WebAPI_Db_Resto.Models.DTOs.Table;
 using Lab1_WebAPI_Db_Resto.Models.ViewModels;
 using Lab1_WebAPI_Db_Resto.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         [HttpPost("table/add")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> AddTable(TableDto table)
         {
             try
@@ -34,6 +36,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
 
 
         [HttpDelete("table/delete")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteTableByTableNr(TableNumberDto table)
         {
             try
@@ -53,6 +56,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
 
         // default route
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<TableDto>>> GetAllTables()
         {
             try
@@ -67,6 +71,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
 
 
         [HttpGet("available")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<TableDto>>> GetFreeTablesByTime(DateTime time, double reservationHours = 2)
         {
             try
@@ -97,6 +102,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         [HttpPost("table")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<CustomerDto>> GetTableByTableNr(TableNumberDto table)
         {
             try
@@ -116,6 +122,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
 
 
         [HttpPatch("table/update")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateTable(TableUpdateDto table)
         {
             try

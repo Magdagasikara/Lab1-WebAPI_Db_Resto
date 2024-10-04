@@ -4,6 +4,7 @@ using Lab1_WebAPI_Db_Resto.Models.DTOs.MealCategory;
 using Lab1_WebAPI_Db_Resto.Models.ViewModels;
 using Lab1_WebAPI_Db_Resto.Services;
 using Lab1_WebAPI_Db_Resto.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,6 +43,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         [HttpPost("meals/meal/add")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> AddMeal(MealWithCategoryDto meal)
         {
             try
@@ -56,6 +58,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         [HttpDelete("meals/meal/{mealId}/delete")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteMealById(int mealId)
         {
             try
@@ -74,6 +77,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         [HttpGet("meals")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<MealWithCategoryDto>>> GetAllMeals()
         {
             try
@@ -87,6 +91,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         [HttpGet("meals/meal/{mealId}")] // ID shouldnt be exposed externally, I still need to find a good replacement
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<MealWithCategoryDto>> GetMealById(int mealId)
         {
             try
@@ -104,6 +109,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         [HttpPatch("meals/meal/update")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateMeal(MealUpdateDto meal)
         {
             Console.WriteLine("halo!!");
@@ -123,6 +129,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         [HttpPost("categories/category/add")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> AddMealCategory(MealCategoryDto mealCategory)
         {
             try
@@ -136,6 +143,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
         }
         [HttpDelete("categories/category/{categoryId}/delete")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteMealCategoryById(int categoryId)
         {
             try
@@ -154,6 +162,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         [HttpGet("categories")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<MealCategoryDto>>> GetAllMealCategories()
         {
             try
@@ -167,6 +176,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         [HttpGet("categories/category/{categoryId}")] // ID shouldnt be exposed externally, I still need to find a good replacement
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<MealCategoryWithMealsDto>> GetMealCategoryById(int categoryId)
         {
             try
@@ -184,6 +194,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         [HttpPatch("categories/category/update")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateMealCategory(MealCategoryUpdateDto mealCategory)
         {
             try

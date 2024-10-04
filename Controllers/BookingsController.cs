@@ -1,6 +1,7 @@
 ﻿using Lab1_WebAPI_Db_Resto.Models.DTOs.Booking;
 using Lab1_WebAPI_Db_Resto.Models.ViewModels;
 using Lab1_WebAPI_Db_Resto.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,6 +51,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
 
         // default route
         [HttpGet]
+        [Authorize(Roles ="Admin")]
         public async Task<ActionResult<BookingWithTablesEndTimeDto>> GetAllBookings()
         {
             try
@@ -76,6 +78,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             }
         }
         [HttpGet("booking/{bookingNumber}/detailed")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<BookingWithTablesEndTimeDto>> GetBookingWithTablesByBookingNumber(string bookingNumber)
         {
             try

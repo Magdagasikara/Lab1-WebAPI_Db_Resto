@@ -1,6 +1,7 @@
 ﻿using Lab1_WebAPI_Db_Resto.Models.DTOs.Customer;
 using Lab1_WebAPI_Db_Resto.Models.ViewModels;
 using Lab1_WebAPI_Db_Resto.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +32,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
         }
 
         [HttpDelete("customer/delete")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteCustomerByEmail(CustomerEmailDto customer)
         {
             try
@@ -50,6 +52,7 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
 
         // default route
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<CustomerDto>>> GetAllCustomers()
         {
             try

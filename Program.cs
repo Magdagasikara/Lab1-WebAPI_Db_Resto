@@ -4,7 +4,10 @@ using Lab1_WebAPI_Db_Resto.Data.Repositories;
 using Lab1_WebAPI_Db_Resto.Data.Repositories.IRepositories;
 using Lab1_WebAPI_Db_Resto.Services;
 using Lab1_WebAPI_Db_Resto.Services.IServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Lab1_WebAPI_Db_Resto
 {
@@ -19,7 +22,24 @@ namespace Lab1_WebAPI_Db_Resto
             });
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-            // add Cors to communicate with frontend
+            // Configure Authentication and Authorization
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                    };
+                });
+            builder.Services.AddAuthorization();
+
+            // Add Cors to communicate with frontend
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowLocalFrontend",
@@ -49,6 +69,9 @@ namespace Lab1_WebAPI_Db_Resto
             builder.Services.AddScoped<IMealService, MealService>();
             builder.Services.AddScoped<IMealCategoryRepository, MealCategoryRepository>();
             builder.Services.AddScoped<IMealCategoryService, MealCategoryService>();
+            builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+            builder.Services.AddScoped<IAccountService, AccountService>();
+            builder.Services.AddScoped<JwtService>();
 
             var app = builder.Build();
 
@@ -63,6 +86,7 @@ namespace Lab1_WebAPI_Db_Resto
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

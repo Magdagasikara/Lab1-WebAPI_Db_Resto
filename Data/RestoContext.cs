@@ -16,6 +16,7 @@ namespace Lab1_WebAPI_Db_Resto.Data
         public DbSet<MealIngredient> MealIngredients { get; set; }
         public DbSet<Table> Tables { get; set; }
         public DbSet<TableBooking> TableBookings { get; set; }
+        public DbSet<Account> Accounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -97,6 +98,9 @@ namespace Lab1_WebAPI_Db_Resto.Data
                 new MealCategory { Id = 3, Name = "Dessert", CategoryOrder = 3 },
                 new MealCategory { Id = 4, Name = "Snacks", CategoryOrder = 4 }
                 );
+            //modelBuilder.Entity<Account>().HasData(
+            //    new Account { Id = 1, , Role = "Admin", Name = "Starter", Email="admin@a.a", PasswordHash="" }
+            //    );
 
         }
 
