@@ -445,17 +445,33 @@ ___
 **ACCOUNTS**  
 ___
 
-uppdatera listan med login register etc!
+**POST - Register a user** - /api/accounts/register  
+request body:  
+```
+{  
+  "name": "Magda M",  
+  "role": "Admin",  
+  "email": "magda@m.m",  
+  "password": "magdamm"  
+}  
+```
+
+**POST - Login a user** - /api/accounts/login  
+request body:  
+```
+{  
+  "email": "magda@m.m",  
+  "password": "magdamm"  
+}  
+```
 
 
-
+___
 todo:
-- only half-hours possible in booking system  
 - default checking for available tables NOW  
 - ViewModels - last two ones to be removed  
-- status codes, status codes, status codes...
-- remember to handle meals without category on the website
-- kkan MealUpdateDto tas bort nu och ersättas av MealWithCategoryDto?
+- improve choice of status codes...
+- (kan MealUpdateDto tas bort nu och ersättas av MealWithCategoryDto?)
 
 kolla igen  
 - IActionResult vs ActionResult  
