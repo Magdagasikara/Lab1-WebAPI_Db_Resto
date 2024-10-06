@@ -1,5 +1,16 @@
 # Lab1-WebAPI_Db_Resto
 
+___
+**Restaurant app (1/3), backend. ASP.NET Core Web Api with Db.**  
+Backend using ASP.NET Core Web Api with Db for management of restaurant's bookings, menu, tables, customers. Authentication and authorization of admin with JWT token.  
+___
+
+Part 2, frontend with ASP.NET MVC.:  
+https://github.com/Magdagasikara/Lab2-MVC_Resto_Frontend  
+Part 3, user's book a table component:  
+https://github.com/Magdagasikara/Lab3-Resto_React  
+
+___
 Initial Db-plan:  
 ![text](https://github.com/Magdagasikara/Lab1-WebAPI_Db_Resto/blob/master/ER.png)
 Changes compared with the scheme: "Table per hour" has become "TableBooking" and I didn't have time yet to implement Meal categories and ingredients as they weren't part of our assignment.
