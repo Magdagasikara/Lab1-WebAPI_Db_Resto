@@ -121,23 +121,23 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
 
 
 
-        [HttpPatch("table/update")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> UpdateTable(TableUpdateDto table)
-        {
-            try
-            {
-                await _tableServices.UpdateTableAsync(table);
-                return NoContent();
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        //[HttpPatch("table/update")]
+        //[Authorize(Roles = "Admin")]
+        //public async Task<ActionResult> UpdateTable(TableUpdateDto table)
+        //{
+        //    try
+        //    {
+        //        await _tableServices.UpdateTableAsync(table);
+        //        return NoContent();
+        //    }
+        //    catch (KeyNotFoundException ex)
+        //    {
+        //        return NotFound(ex.Message);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
     }
 }

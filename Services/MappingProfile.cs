@@ -26,6 +26,8 @@ namespace Lab1_WebAPI_Db_Resto.Services
             CreateMap<BookingDto, Booking>().ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<Booking, BookingListVM>();
             CreateMap<Booking, BookingWithTablesEndTimeDto>();
+            CreateMap<BookingWithTablesEndTimeDto, Booking>();
+            CreateMap<BookingUpdateDto, Booking>();
 
             CreateMap<MealDto, Meal>();
             CreateMap<MealWithCategoryDto, Meal>();

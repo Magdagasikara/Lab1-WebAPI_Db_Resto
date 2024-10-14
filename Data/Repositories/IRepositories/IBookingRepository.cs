@@ -13,7 +13,7 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories.IRepositories
         Task<IEnumerable<Booking>> GetActiveBookingsByEmailAsync(DateTime dateTime, string email);
         Task<IEnumerable<Booking>> GetBookingsByDateAsync(DateOnly date);
         Task AddBookingAsync(Booking booking);
-        Task UpdateBookingAsync(string bookingNr, Booking updatedBooking);
+        Task UpdateBookingAsync(Booking updatedBooking);
         Task UpdateBookingTablesAsync(string bookingNr, Booking updatedBooking, List<Models.Table> tables);
         Task DeleteBookingByBookingNumberAsync(string bookingNr);
     }

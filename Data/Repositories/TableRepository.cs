@@ -30,17 +30,33 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<Table>> BookAndGetTablesByTimeAsync(Booking booking)
+        public async Task<IEnumerable<Table>> AssignTablesToBookingAsync(Booking booking, Booking? bookingOriginal = null)
         {
             try
             {
                 int amountOfGuests = booking.AmountOfGuests;
 
-                // get a list of all free tables
-                var freeTables = await GetFreeTablesByTimeAsync(
-                        booking.ReservationStart,
-                        (booking.ReservationEnd - booking.ReservationStart).TotalHours
-                        );
+                var freeTables = new List<Table>();
+
+                if (bookingOriginal is null)
+                {
+                    // get a list of all free tables
+                    var tables = await GetFreeTablesByTimeAsync(
+                            booking.ReservationStart,
+                            (booking.ReservationEnd - booking.ReservationStart).TotalHours
+                            );
+                    freeTables = tables.ToList();
+                }
+                else
+                {
+                    // get a list of all free tables considering the ones in booking to update
+                    var tables = await GetFreeTablesWithBookingOriginalByTimeAsync(
+                            booking.ReservationStart,
+                            (booking.ReservationEnd - booking.ReservationStart).TotalHours,
+                            bookingOriginal
+                            );
+                    freeTables = tables.ToList();
+                }
 
                 // in first place, try to book a table with this exact amount of places
                 var exactMatch = freeTables
@@ -48,7 +64,7 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
                 if (exactMatch is not null)
                 {
                     var bookedTables = new List<Table> { exactMatch };
-                    await BookTablesAsync(booking, bookedTables);
+                    //await BookTablesAsync(booking, bookedTables);
                     return bookedTables;
                 }
 
@@ -61,7 +77,7 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
                 if (secondMatch is not null)
                 {
                     var bookedTables = new List<Table> { secondMatch };
-                    await BookTablesAsync(booking, bookedTables);
+                    //await BookTablesAsync(booking, bookedTables);
                     return bookedTables;
                 }
 
@@ -85,7 +101,7 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
                             if (prebookedPlaces >= amountOfGuests) break;
                         }
 
-                        await BookTablesAsync(booking, bookedTables);
+                        //await BookTablesAsync(booking, bookedTables);
                         return bookedTables;
                     }
 
@@ -101,11 +117,11 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
 
         }
 
-        public async Task BookTablesAsync(Booking booking, List<Table> tables)
+        public async Task BookTablesAsync(Booking booking, IEnumerable<Table> tables)
         {
             try
             {
-                if (tables.Count == 0)
+                if (tables.Count() == 0)
                 {
                     throw new Exception("Not enough tables for this reservation.");
                 }
@@ -121,7 +137,29 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
                 throw;
             }
         }
-
+        public async Task UpdateTablesAsync(Booking booking, IEnumerable<Table> tables)
+        {
+            try
+            {
+                if (tables.Count() == 0)
+                {
+                    throw new Exception("Not enough tables for this reservation.");
+                }
+                var tableBookings = new List<TableBooking>();
+                foreach (var table in tables)
+                {
+                    var tableBooking = new TableBooking { Booking = booking, Table = table/*, FK_BookingId=booking.Id, FK_TableId=table.Id */};
+                    //await _context.TableBookings.AddAsync(tableBooking);
+                    tableBookings.Add(tableBooking);
+                }
+                booking.TableBookings = tableBookings;
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public async Task DeleteTableByTableNrAsync(int tableNr)
         {
             try
@@ -174,6 +212,30 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
                 throw new Exception("Error getting a list of tables", ex);
             }
         }
+        public async Task<IEnumerable<Table>> GetFreeTablesWithBookingOriginalByTimeAsync(DateTime time, double reservationHours, Booking bookingOriginal)
+        {
+            try
+            {
+                return await _context.Tables
+                            .Where(t => !t.TableBooking.Any(tb => (
+                                // EUREKA!
+                                tb.FK_BookingId != bookingOriginal.Id && (
+                                // reservation started earlier and continues during the time we check for
+                                (tb.Booking.ReservationStart <= time &&
+                                tb.Booking.ReservationEnd > time
+                                ) ||
+                                // reservation starts during the time we check for
+                                (tb.Booking.ReservationStart > time &&
+                                tb.Booking.ReservationStart < time.AddHours(reservationHours)
+                                ))
+                                )))
+                            .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error getting a list of tables", ex);
+            }
+        }
 
         public async Task<Table> GetTableByTableNrAsync(int tableNr)
         {
@@ -197,27 +259,30 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             }
         }
 
-        public async Task UpdateTableAsync(int tableNr, Table updatedTable)
-        {
-            if (updatedTable == null || tableNr == 0)
-            {
-                throw new ArgumentNullException(nameof(updatedTable), "No table to be updated");
-            }
-            try
-            {
-                var table = await GetTableByTableNrAsync(tableNr);
-                table.AmountOfPlaces = updatedTable.AmountOfPlaces;
-                table.TableNumber = updatedTable.TableNumber;
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                throw new Exception("Table to be updated does not exist in Db");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error when updating a table", ex);
-            }
-        }
+        //public async Task UpdateTableAsync(int tableNr, Table updatedTable)
+        //{
+        //    if (updatedTable == null || tableNr == 0)
+        //    {
+        //        throw new ArgumentNullException(nameof(updatedTable), "No table to be updated");
+        //    }
+        //    try
+        //    {
+        //        var table = await GetTableByTableNrAsync(tableNr);
+        //        table.AmountOfPlaces = updatedTable.AmountOfPlaces;
+        //        table.TableNumber = updatedTable.TableNumber;
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        throw new Exception("Table to be updated does not exist in Db");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Error when updating a table", ex);
+        //    }
+        //}
+
+
+
     }
 }

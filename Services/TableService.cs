@@ -96,25 +96,25 @@ namespace Lab1_WebAPI_Db_Resto.Services
             }
         }
 
-        public async Task UpdateTableAsync(TableUpdateDto table)
-        {
-            try
-            {
-                var updatedTable = _mapper.Map<Table>(table);
-                if (table.UpdatedTableNumber is not null && table.UpdatedTableNumber != 0)
-                {
-                    updatedTable.TableNumber = table.UpdatedTableNumber.Value;
-                }
-                await _tableRepo.UpdateTableAsync(table.TableNumber, updatedTable);
-            }
-            catch (KeyNotFoundException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error updating table in service", ex);
-            }
-        }
+        //public async Task UpdateTableAsync(TableUpdateDto table)
+        //{
+        //    try
+        //    {
+        //        var updatedTable = _mapper.Map<Table>(table);
+        //        if (table.UpdatedTableNumber is not null && table.UpdatedTableNumber != 0)
+        //        {
+        //            updatedTable.TableNumber = table.UpdatedTableNumber.Value;
+        //        }
+        //        await _tableRepo.UpdateTableAsync(table.TableNumber, updatedTable);
+        //    }
+        //    catch (KeyNotFoundException)
+        //    {
+        //        throw;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Error updating table in service", ex);
+        //    }
+        //}
     }
 }

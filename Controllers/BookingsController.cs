@@ -1,5 +1,7 @@
 ﻿using Lab1_WebAPI_Db_Resto.Models.DTOs.Booking;
+using Lab1_WebAPI_Db_Resto.Models.DTOs.Customer;
 using Lab1_WebAPI_Db_Resto.Models.ViewModels;
+using Lab1_WebAPI_Db_Resto.Services;
 using Lab1_WebAPI_Db_Resto.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -84,6 +86,25 @@ namespace Lab1_WebAPI_Db_Resto.Controllers
             try
             {
                 return Ok(await _bookingServices.GetBookingWithTablesByBookingNumberAsync(bookingNumber));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPatch("booking/update")]
+        public async Task<ActionResult> UpdateBooking(BookingUpdateDto booking)
+        {
+            try
+            {
+                await _bookingServices.UpdateBookingAsync(booking);
+                return NoContent();
+            }
+            // en ny exception för finns inte så många platser?
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

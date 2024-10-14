@@ -486,5 +486,7 @@ todo:
 
 kolla igen  
 - IActionResult vs ActionResult  
-
+- mapping profile o jwt services, separat?
+- from a service, address other repos or services? (apart from the one that belongs to that service)
+ 
 egentligen varje add/delete/update booking borde uppdatera tabell med antalet lediga platser per halvtimme som ligger tillgänglig i frontend

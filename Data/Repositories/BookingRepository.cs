@@ -173,19 +173,21 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories
             }
         }
 
-        public async Task UpdateBookingAsync(string bookingNr, Booking updatedBooking)
+        public async Task UpdateBookingAsync(Booking booking)
         {
-            if (updatedBooking == null || bookingNr.IsNullOrEmpty())
+            if (booking == null || string.IsNullOrEmpty(booking.BookingNumber))
             {
-                throw new ArgumentNullException(nameof(updatedBooking), "No booking to be updated");
+                throw new ArgumentNullException(nameof(booking), "No booking to be updated");
             }
             try
             {
-                var booking = await GetBookingByBookingNumberAsync(bookingNr);
-                booking.ReservationStart = updatedBooking.ReservationStart;
-                booking.ReservationEnd = updatedBooking.ReservationEnd;
-                booking.AmountOfGuests = updatedBooking.AmountOfGuests;
-                booking.TimeStamp = DateTime.Now;
+                var bookingToUpdate = await GetBookingByBookingNumberAsync(booking.BookingNumber);
+                bookingToUpdate.ReservationStart = booking.ReservationStart;
+                bookingToUpdate.ReservationEnd = booking.ReservationEnd;
+                bookingToUpdate.AmountOfGuests = booking.AmountOfGuests;
+                bookingToUpdate.TableBookings = booking.TableBookings;
+                bookingToUpdate.FK_CustomerId = booking.Customer.Id;
+                bookingToUpdate.TimeStamp = DateTime.Now;
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

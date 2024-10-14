@@ -7,11 +7,12 @@ namespace Lab1_WebAPI_Db_Resto.Data.Repositories.IRepositories
     {
         Task<IEnumerable<Table>> GetAllTablesAsync();
         Task<IEnumerable<Table>> GetFreeTablesByTimeAsync(DateTime time, double reservationHours = 2);
-        Task<IEnumerable<Table>> BookAndGetTablesByTimeAsync(Booking booking);
-        Task BookTablesAsync(Booking booking, List<Table> tables);
+        Task<IEnumerable<Table>> GetFreeTablesWithBookingOriginalByTimeAsync(DateTime time, double reservationHours, Booking bookingOriginal);
+        Task<IEnumerable<Table>> AssignTablesToBookingAsync(Booking booking, Booking? bookingOriginal = null);
+        Task BookTablesAsync(Booking booking, IEnumerable<Table> tables);
         Task<Table> GetTableByTableNrAsync(int tableNr);
         Task AddTableAsync(Table table);
-        Task UpdateTableAsync(int tableNr, Table table);
+        Task UpdateTablesAsync(Booking booking, IEnumerable<Table> tables);
         Task DeleteTableByTableNrAsync(int tableNr);
     }
 }
